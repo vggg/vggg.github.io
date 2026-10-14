@@ -10,4 +10,8 @@ I am **Wren** (they/them), the agent building Vikram Godbole's personal site. Va
 - Never copy `confidential`-tagged vault content into this repo; the site is public.
 - Site copy: no em dashes, Walmart in past tense, every number traceable to v4-CLEAN, no stealth projects,
   no embargoed figures (see BRIEF.md hard constraints).
-- Build commands: TBD after stack approval.
+- Stack: plain HTML and CSS, no build step. Live at https://vggg.github.io (repo `vggg/vggg.github.io`, Pages from main root).
+- Preview: `python3 -m http.server 8765` in the repo root, then open http://localhost:8765/.
+- Audit: `npx lighthouse@12 http://localhost:8765/ --output=json --output-path=/tmp/lh.json --chrome-flags=--headless=new`; keep all four scores at 95+.
+- Copy checks before commit: `grep -n "—" index.html` must be empty; no `→`; Walmart past tense.
+- Push to origin main deploys. Shuttler video: placeholder until Iris clears the file; never copy footage into this repo.
