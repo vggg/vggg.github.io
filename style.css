@@ -117,10 +117,31 @@ section { margin: 3.5rem 0; }
 .snap dt { font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-top: 1rem; }
 .snap dd { margin: 0.2rem 0 0; }
 
+/* two-column card body, diagram, screenshots, top-five */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; align-items: start; }
+.diagram { margin: 0; color: var(--text); }
+.diagram svg { width: 100%; height: auto; display: block; }
+.diagram .box rect { fill: var(--surface-2); stroke: var(--line-strong); }
+.diagram .box.agent rect { stroke: var(--accent); }
+.diagram .loop { fill: none; stroke: var(--line-strong); stroke-dasharray: 4 4; }
+.diagram .edge { fill: none; stroke: currentColor; stroke-width: 1.2; opacity: .8; }
+.diagram .edge.dashed { stroke-dasharray: 3 3; }
+.diagram figcaption { font-size: 0.85rem; color: var(--muted); margin-top: 0.4rem; }
+.shots { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.6rem; margin: 0.4rem 0 1rem; }
+.shots a { display: block; text-decoration: none; color: var(--muted); font-size: 0.78rem; }
+.shots img { width: 100%; height: auto; display: block; border-radius: 8px; border: 1px solid var(--line); }
+.shots a:hover img { border-color: var(--accent); }
+.shots span { display: block; margin-top: 0.3rem; }
+.list-head { font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin: 0.8rem 0 0.3rem; }
+.top5 { margin: 0; padding-left: 1.2rem; }
+.top5 li { margin-bottom: 0.45rem; }
+
 footer { max-width: var(--measure); margin: 0 auto; padding: 1rem 16px 2rem; color: var(--muted); font-size: 0.9rem; border-top: 1px solid var(--line); }
 
 @media (max-width: 720px) {
   .grid { grid-template-columns: 1fr; }
+  .two-col { grid-template-columns: 1fr; }
+  .shots { grid-template-columns: repeat(2, 1fr); }
   .hero { flex-direction: column; }
   .top nav a { margin-left: 0.8rem; }
 }

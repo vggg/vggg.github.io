@@ -77,36 +77,89 @@
         </p>
       </article>
 
-      <article class="card" id="encodr">
+      <article class="card wide" id="encodr">
         <div class="card-top"><span class="badge pivot">Active prototype, private</span></div>
         <h3>enCodr</h3>
         <p class="tagline">Compile ideas into visual communication.</p>
-        <dl class="notebook">
-          <dt>Hypothesis</dt>
-          <dd>A presentation is a compiled communication product. If the argument lives in reviewable structured source (claims, evidence, dependencies, the decision being asked for), one source can compile into a ten-minute leadership briefing or a forty-five-minute engineering talk, for PPTX, web, PDF or video, without rebuilding the deck by hand.</dd>
-          <dt>Result so far</dt>
-          <dd>A thesis, a visual grammar and nine ratified architecture decisions, plus a working TypeScript prototype: a deterministic compiler that lowers, verifies and emits slides, measures text against real font metrics and checks renders in Chromium; a Fastify API, thin CLI and browser editor over PostgreSQL; provider-agnostic model adapters with reserve-before-dispatch spend metering; and a hosted agent that repairs deterministically first and escalates to a model only under a frozen policy. An offline eval suite scores its defect detectors. The prototype does not yet implement the whole thesis.</dd>
-          <dt>Agentic workflow</dt>
-          <dd>The model proposes; the application decides. A hosted agent loop plans, constructs, tests and revises decks against compiler feedback: deterministic planning, measurement and repair first, escalation to a model only on a configured trigger, every tool call checked for permissions and arguments, every candidate verified in a real render before a guarded commit. A model's completion message cannot skip a check or advance a revision. Spend is reserved before dispatch and settled honestly, and interrupted work is reconciled without resending unknown calls.</dd>
-          <dt>How it was built</dt>
-          <dd>Owner sets the rules and gates; agents do the implementation in bounded, reviewed rounds. Discovery closed before design, design was ratified before any code, and the owner released the implementation hold in a recorded decision. Twelve agreed build principles live in one file. Work was cut into tickets with acceptance checks, mirrored to GitHub issues. A delivery loop ran one agent per issue on its own branch under a red-then-green test discipline, with a separate review agent and a coding standard. A deterministic round driver with no model calls of its own chained 21 rounds: label, build, push, open the PR, wait for green CI, merge, record, and stop for the owner on anything it could not decide. The gate is a command, a missing check fails closed, and mocks never count as evidence. 97 merged pull requests, 79 issues, 28 evidence reports and 61 review reports over six days.</dd>
-          <dt>Stack</dt>
-          <dd>TypeScript, Fastify, PostgreSQL, Playwright and Chromium, zod, OpenAI, Anthropic and OpenRouter adapters</dd>
-        </dl>
+        <div class="two-col">
+          <dl class="notebook">
+            <dt>Hypothesis</dt>
+            <dd>A presentation is a compiled communication product. Keep the argument in reviewable structured source, and one source compiles into a ten-minute briefing or a forty-five-minute talk, for PPTX, web, PDF or video.</dd>
+            <dt>Result so far</dt>
+            <dd>Thesis, visual grammar, nine ratified architecture decisions, and a working prototype: a deterministic compiler that lowers, verifies and emits slides and checks every render in Chromium; API, CLI and browser editor over PostgreSQL; model adapters with spend reserved before dispatch; an agent loop that repairs deterministically first and escalates to a model only on a configured trigger. The prototype does not yet implement the whole thesis.</dd>
+            <dt>Stack</dt>
+            <dd>TypeScript, Fastify, PostgreSQL, Playwright and Chromium, zod, OpenAI, Anthropic and OpenRouter adapters</dd>
+          </dl>
+          <figure class="diagram">
+            <svg viewBox="0 0 520 296" role="img" aria-labelledby="encodr-diag-t encodr-diag-d">
+              <title id="encodr-diag-t">How enCodr was built</title>
+              <desc id="encodr-diag-d">Owner gates: discovery, ratified design, release of the implementation hold. Then 21 rounds of a loop: ticket, implement agent with red then green tests, review agent, CI gate, merge, record. The driver stops for the owner when it cannot decide.</desc>
+              <defs>
+                <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="currentColor"/></marker>
+              </defs>
+              <g font-family="Inter, system-ui, sans-serif" font-size="11" fill="currentColor">
+                <text x="10" y="18" font-size="10" letter-spacing="1.5" opacity=".7">OWNER GATES</text>
+                <g class="box"><rect x="10" y="28" width="150" height="34" rx="6"/><text x="85" y="49" text-anchor="middle">Discovery closed</text></g>
+                <g class="box"><rect x="185" y="28" width="150" height="34" rx="6"/><text x="260" y="49" text-anchor="middle">Design ratified, 9 ADRs</text></g>
+                <g class="box"><rect x="360" y="28" width="150" height="34" rx="6"/><text x="435" y="49" text-anchor="middle">Hold released</text></g>
+                <path d="M160 45H185M335 45H360" class="edge" marker-end="url(#ar)"/>
+                <path d="M435 62V84" class="edge" marker-end="url(#ar)"/>
+
+                <text x="10" y="100" font-size="10" letter-spacing="1.5" opacity=".7">21 ROUNDS, DRIVER MAKES NO MODEL CALLS</text>
+                <rect x="10" y="108" width="500" height="118" rx="10" class="loop"/>
+                <g class="box"><rect x="22" y="128" width="88" height="34" rx="6"/><text x="66" y="149" text-anchor="middle">Ticket</text></g>
+                <g class="box agent"><rect x="124" y="128" width="104" height="34" rx="6"/><text x="176" y="144" text-anchor="middle">Implement agent</text><text x="176" y="157" text-anchor="middle" font-size="9" opacity=".8">red, then green</text></g>
+                <g class="box agent"><rect x="242" y="128" width="88" height="34" rx="6"/><text x="286" y="149" text-anchor="middle">Review agent</text></g>
+                <g class="box"><rect x="344" y="128" width="72" height="34" rx="6"/><text x="380" y="149" text-anchor="middle">CI gate</text></g>
+                <g class="box"><rect x="430" y="128" width="68" height="34" rx="6"/><text x="464" y="149" text-anchor="middle">Merge</text></g>
+                <path d="M110 145H124M228 145H242M330 145H344M416 145H430" class="edge" marker-end="url(#ar)"/>
+                <path d="M464 162V186H66V162" class="edge" marker-end="url(#ar)"/>
+                <text x="265" y="200" text-anchor="middle" font-size="10" opacity=".8">record evidence, review, decision log; next ticket</text>
+                <path d="M380 162V206" class="edge dashed"/>
+                <text x="380" y="218" text-anchor="middle" font-size="10" opacity=".8">red or undecidable: stop, write a note for the owner</text>
+
+                <g font-size="10" opacity=".85">
+                  <text x="10" y="252">Gate is a command: boundaries, typecheck, lint, full suite on real PostgreSQL and Chromium.</text>
+                  <text x="10" y="268">A missing check fails closed. Mocks never count as evidence.</text>
+                  <text x="10" y="284">97 PRs, 79 issues, 28 evidence and 61 review reports, six days.</text>
+                </g>
+              </g>
+            </svg>
+            <figcaption>How it was built: the owner gates, agents implement in reviewed rounds.</figcaption>
+          </figure>
+        </div>
       </article>
 
-      <article class="card" id="trellisiq">
-        <div class="card-top"><span class="badge mvp">Functional MVP</span></div>
+      <article class="card wide" id="trellisiq">
+        <div class="card-top"><span class="badge mvp">Functional MVP, live</span></div>
         <h3>TrellisIQ</h3>
         <p class="tagline">Full-stack garden and crop analytics platform.</p>
-        <dl class="notebook">
-          <dt>Hypothesis</dt>
-          <dd>Lightweight domain-specific data schemas, plus a vision model, can simplify multi-season plant tracking and micro-climate scheduling for home growers.</dd>
-          <dt>Result so far</dt>
-          <dd>Live. Photo in, 0 to 100 health score and next action out. Sunlight and shadow modelling, irrigation scheduling, seasonal photo comparison, SMS and email alerts. 640+ merged pull requests, 990+ tests, 80% line coverage enforced in CI. Built with a four-persona team of AI coding agents I directed, plus one human iOS collaborator.</dd>
-          <dt>Stack</dt>
-          <dd>Next.js, PostgreSQL with Prisma, Tailwind CSS, Google Cloud Run, GitHub Actions, Claude vision</dd>
-        </dl>
+        <div class="shots">
+          <a href="assets/tiq-dashboard.jpg"><img src="assets/tiq-dashboard.jpg" alt="TrellisIQ dashboard: plants needing attention with health scores and alerts" width="960" height="600" loading="lazy" decoding="async"><span>Dashboard, demo garden</span></a>
+          <a href="assets/tiq-garden.jpg"><img src="assets/tiq-garden.jpg" alt="TrellisIQ garden detail: zones, garden map, garden walk and irrigation" width="960" height="600" loading="lazy" decoding="async"><span>Garden detail</span></a>
+          <a href="assets/tiq-capture.jpg"><img src="assets/tiq-capture.jpg" alt="TrellisIQ capture page: analyze a plant from a photo or a walkthrough video" width="960" height="600" loading="lazy" decoding="async"><span>Capture and analyze</span></a>
+          <a href="assets/tiq-landing.jpg"><img src="assets/tiq-landing.jpg" alt="TrellisIQ landing page" width="960" height="600" loading="lazy" decoding="async"><span>trellisiq.online</span></a>
+        </div>
+        <div class="two-col">
+          <dl class="notebook">
+            <dt>Hypothesis</dt>
+            <dd>Lightweight domain-specific data schemas, plus a vision model, can simplify multi-season plant tracking and micro-climate scheduling for home growers.</dd>
+            <dt>Result so far</dt>
+            <dd>Live, with a no-account demo garden. 640+ merged pull requests, 990+ tests, 80% line coverage enforced in CI. Built with a four-persona team of AI coding agents I directed, plus one human iOS collaborator.</dd>
+            <dt>Stack</dt>
+            <dd>Next.js, PostgreSQL with Prisma, Tailwind CSS, Google Cloud Run, GitHub Actions, Claude vision</dd>
+          </dl>
+          <div>
+            <p class="list-head">Top five</p>
+            <ol class="top5">
+              <li><strong>Photo to health score.</strong> Claude vision identifies the plant, scores it 0 to 100, names the issue and the next action.</li>
+              <li><strong>Priority alerts.</strong> Critical and high plants surface first, with email and SMS, plus a weekly plan from garden state and weather.</li>
+              <li><strong>Garden map and walk.</strong> Zones on a top-down photo, and a walkthrough video that identifies every plant it sees.</li>
+              <li><strong>Sunlight and shadow.</strong> Sun profile per garden, hour-by-hour shadow overlay, seasonal view.</li>
+              <li><strong>Irrigation.</strong> Watering lines, multiple schedules, dripper assignments per plant.</li>
+            </ol>
+          </div>
+        </div>
         <p class="card-links">
           <a href="https://trellisiq.online" class="btn">trellisiq.online</a>
         </p>
