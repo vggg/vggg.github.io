@@ -94,10 +94,11 @@
         <p class="tagline">One phone clip of a badminton match in. Rally structure, tempo, a coaching cue and a running score out, with a plain statement of what one camera cannot call.</p>
       </header>
       <figure class="video" id="shuttler-video">
-        <div class="video-placeholder" role="img" aria-label="Demo video placeholder">
-          <span>Anonymized dashboard demo, 14 seconds. Video coming soon.</span>
-        </div>
-        <figcaption>Dashboard render on an anonymized clip: shuttle trail, running score and calibration confidence. No raw footage is ever shown.</figcaption>
+        <button class="video-facade" type="button" data-yt="Q_oMZMiVAKc" aria-label="Play the Shuttler demo video, 15 seconds">
+          <img src="https://i.ytimg.com/vi/Q_oMZMiVAKc/maxresdefault.jpg" alt="" width="1280" height="720" loading="lazy" decoding="async">
+          <span class="play" aria-hidden="true"></span>
+        </button>
+        <figcaption>Dashboard render on an anonymized clip, 15 seconds: shuttle trail, player movement, running score. All faces blurred. No raw footage is ever shown. Plays from YouTube when you press play.</figcaption>
       </figure>
       <p>
         A contract-first pipeline: calibrate the court from painted lines, track the shuttle with
@@ -225,6 +226,19 @@
 <footer>
   <p>Built with an AI agent, directed by Vikram. No tracking.</p>
 </footer>
+
+<script>
+document.querySelectorAll('.video-facade').forEach(function (b) {
+  b.addEventListener('click', function () {
+    var f = document.createElement('iframe');
+    f.src = 'https://www.youtube-nocookie.com/embed/' + b.dataset.yt + '?autoplay=1&rel=0';
+    f.title = 'Shuttler demo video';
+    f.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+    f.setAttribute('allowfullscreen', '');
+    b.replaceWith(f);
+  });
+});
+</script>
 
 </body>
 </html>
