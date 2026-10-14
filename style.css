@@ -126,6 +126,7 @@ section { margin: 3.5rem 0; }
 .diagram .loop { fill: none; stroke: var(--line-strong); stroke-dasharray: 4 4; }
 .diagram .edge { fill: none; stroke: currentColor; stroke-width: 1.2; opacity: .8; }
 .diagram .edge.dashed { stroke-dasharray: 3 3; }
+.diagram.arch { margin-top: 1rem; }
 .diagram figcaption { font-size: 0.85rem; color: var(--muted); margin-top: 0.4rem; }
 .shots { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.6rem; margin: 0.4rem 0 1rem; }
 .shots a { display: block; text-decoration: none; color: var(--muted); font-size: 0.78rem; }
