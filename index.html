@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vikram Godbole</title>
+<meta name="description" content="Vikram Godbole: engineering executive who still builds. Twelve years at Walmart from engineer to a 250+ engineer platform organization. Now building agentic AI products and the governance to run them.">
+<meta name="color-scheme" content="light dark">
+<meta property="og:title" content="Vikram Godbole">
+<meta property="og:description" content="Engineering executive who still builds. TrellisIQ, Shuttler, Barony, enCodr.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://vggg.github.io/">
+<meta property="og:image" content="https://vggg.github.io/assets/vikram.jpg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230f766e'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='system-ui' font-size='17' font-weight='700' fill='white'%3EVG%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="top">
+  <a class="brand" href="#top">Vikram Godbole</a>
+  <nav aria-label="Sections">
+    <a href="#builds">Builds</a>
+    <a href="#talks">Talks</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <img class="portrait" src="assets/vikram.jpg" alt="Vikram Godbole" width="112" height="112">
+    <div>
+      <p class="eyebrow">Pleasanton, California</p>
+      <h1>Engineering executive who still builds.</h1>
+      <p class="lede">
+        Twelve years at Walmart, from engineer to a 250+ engineer platform organization and
+        five walmart.com business lines. Now building agentic AI products, and the governance
+        to run them, with my own hands.
+      </p>
+      <p class="links">
+        <a href="#builds" class="btn">See the builds</a>
+        <a href="https://www.linkedin.com/in/vikramgodbole" rel="me">LinkedIn</a>
+        <a href="https://github.com/vggg" rel="me">GitHub</a>
+        <a href="mailto:vikramggg@hotmail.com">Email</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="about" aria-labelledby="about-h">
+    <h2 id="about-h">In short</h2>
+    <ul class="facts">
+      <li>Ran <strong>Walmart Commerce Platform</strong>, the organization behind walmart.com on iOS, Android and web: 250+ engineers across the United States and India, ten direct reports, Tier-0 services serving thousands of feature engineers.</li>
+      <li>Owned technology for <strong>five walmart.com business lines</strong>. Launched LocalFinds from zero, and backed a restaurant marketplace the backlog had ranked 49th of 50: a 15-store pilot to 56 stores in three months, now 1,300+ stores.</li>
+      <li>Put <strong>two agentic systems into production</strong> at Walmart: a human-in-the-loop license-verification pipeline and a catalog-onboarding assistant built on MCP and RAG that removed 60+ ops hours a week.</li>
+      <li>Since then, every project below was built hands-on with teams of AI coding agents I direct, evaluated with published numbers, and shipped to a real URL where it could be.</li>
+    </ul>
+  </section>
+
+  <section id="builds" aria-labelledby="builds-h">
+    <h2 id="builds-h">Builds</h2>
+    <p class="section-note">Four projects, each labelled with its honest stage. Every figure traces to the project's own evaluation record.</p>
+
+    <article class="card" id="trellisiq">
+      <header>
+        <span class="stage live">Live</span>
+        <h3>TrellisIQ</h3>
+        <p class="tagline">Your garden, intelligently watched. Photo in, health score and next action out.</p>
+      </header>
+      <p>
+        An AI garden-monitoring platform. You map your garden, photograph plants, and Claude vision
+        scores each one from 0 to 100, names the issue, and ranks what needs you today. Sunlight and
+        shadow modelling, irrigation planning, seasonal photo comparison, SMS and email alerts, and
+        a shared library across a team.
+      </p>
+      <dl class="stats">
+        <div><dt>Merged pull requests</dt><dd>640+</dd></div>
+        <div><dt>Automated tests</dt><dd>990+</dd></div>
+        <div><dt>Line coverage, enforced in CI</dt><dd>80%</dd></div>
+      </dl>
+      <p class="how">
+        Next.js 14, PostgreSQL and Prisma, Google Cloud Run and Cloud Storage, the Anthropic SDK with
+        fallback routing and a prompt-injection guard. Built by a four-persona team of AI coding
+        agents that I directed, plus one human iOS collaborator. The code repository is private.
+      </p>
+      <p class="card-links">
+        <a href="https://trellisiq.online" class="btn">trellisiq.online</a>
+      </p>
+    </article>
+
+    <article class="card" id="shuttler">
+      <header>
+        <span class="stage beta">Invite-only beta, proof of concept</span>
+        <h3>Shuttler</h3>
+        <p class="tagline">One phone clip of a badminton match in. Rally structure, tempo, a coaching cue and a running score out, with a plain statement of what one camera cannot call.</p>
+      </header>
+      <figure class="video" id="shuttler-video">
+        <div class="video-placeholder" role="img" aria-label="Demo video placeholder">
+          <span>Anonymized dashboard demo, 14 seconds. Video coming soon.</span>
+        </div>
+        <figcaption>Dashboard render on an anonymized clip: shuttle trail, running score and calibration confidence. No raw footage is ever shown.</figcaption>
+      </figure>
+      <p>
+        A contract-first pipeline: calibrate the court from painted lines, track the shuttle with
+        TrackNet, track players with YOLO, segment rallies, classify outcomes, score, report, correct.
+        Heavy models run out of process. The hosted version runs the rally-segmentation path on a
+        vision-language model and needs no GPU.
+      </p>
+      <dl class="stats">
+        <div><dt>Shuttle detection on clean footage</dt><dd>0.992</dd></div>
+        <div><dt>Rally recall, VLM path vs geometry path</dt><dd>0.73 vs 0.00</dd></div>
+        <div><dt>Tests passing</dt><dd>1,184</dd></div>
+      </dl>
+      <p>
+        <strong>What the evidence closed.</strong> Eight engineering probes, replicated at a second
+        venue, converged on one fact: ordinary single-camera footage does not record the shuttle near
+        contact. So landing, line calls and winner stay held, the report says so on every page, and
+        the product became intelligence from commodity footage rather than a line judge.
+      </p>
+      <p class="how">
+        Privacy is fail-closed by design: a blur-when-unsure minor classifier, an output guard that
+        refuses an unblurred minor, and raw video that is never served to share-link viewers. Python,
+        Cloud Run, Google sign-in with an allowlist. The repository is private.
+      </p>
+    </article>
+
+    <article class="card" id="barony">
+      <header>
+        <span class="stage oss">Open source, proof of concept</span>
+        <h3>Barony</h3>
+        <p class="tagline">Git-native governance for teams of AI coding agents: who may do what, who did what, what is true now.</p>
+      </header>
+      <p>
+        Run several coding agents on one long-lived project for a few weeks and the same walls appear:
+        state chaos, rules that decay into theater, knowledge rot, and an accountability vacuum.
+        Barony is a spec, a CLI called <code>baron</code>, and per-runtime adapters. Each persona is
+        declared once and hydrated onto Claude Code, code-puppy or a pydantic-ai harness. The
+        substrate is plain markdown and git. No server, no database.
+      </p>
+      <p>
+        The idea it turns on: <strong>an instruction is not a control.</strong> <code>baron guard</code>
+        blocks denied actions before the tool runs, and every capability is labelled honestly as
+        <em>enforced</em> or merely <em>instructed</em>. The tool refuses to round up.
+      </p>
+      <dl class="stats">
+        <div><dt>Operational fidelity measured on a real pilot before Barony</dt><dd>0.53</dd></div>
+        <div><dt>Handoffs left open on that pilot</dt><dd>18 of 40</dd></div>
+        <div><dt>Architecture decision records</dt><dd>35</dd></div>
+      </dl>
+      <p class="how">
+        Published on PyPI. Barony governs its own repository, and governed the agent teams behind
+        TrellisIQ and Shuttler. Picked up inside a large enterprise for a hackathon and an internal
+        API initiative.
+      </p>
+      <p class="card-links">
+        <a href="https://github.com/vggg/barony" class="btn">Repository</a>
+        <a href="https://vggg.github.io/barony/overview/">Docs</a>
+        <a href="https://pypi.org/project/barony/">PyPI</a>
+        <a href="https://github.com/vggg/barony-demo">A week in a Barony project</a>
+      </p>
+    </article>
+
+    <article class="card" id="encodr">
+      <header>
+        <span class="stage concept">Thesis and prototype, private</span>
+        <h3>enCodr</h3>
+        <p class="tagline">Compile ideas into visual communication.</p>
+      </header>
+      <p>
+        A presentation treated as a product: structured source, reviewable decisions, repeatable
+        builds, many delivery formats. Human intent becomes a narrative model of claims, evidence and
+        the decision the audience should reach. That compiles to a semantic intermediate
+        representation, then through a visual compiler and scene graph to PPTX, web, PDF or video.
+      </p>
+      <p>
+        The same reviewed source yields a ten-minute leadership briefing and a forty-five-minute
+        engineering talk. Shortening preserves qualifications and dependencies instead of deleting
+        slides. PPTX is an output and an escape hatch; the semantic source stays authoritative.
+      </p>
+      <p class="how">
+        Canonical thesis, design principles, architecture and nine ratified architecture decisions,
+        plus a TypeScript prototype with a gate that runs dependency boundaries, typecheck, lint and
+        the full suite on PostgreSQL and Chromium. The repository is private.
+      </p>
+    </article>
+  </section>
+
+  <section id="talks" aria-labelledby="talks-h">
+    <h2 id="talks-h">On stage</h2>
+    <ul class="talks">
+      <li>
+        <span class="date">2026-10-06</span>
+        <div>
+          <strong>AI Realized, Agent Controls and the Governance Gap</strong>, SF Tech Week.
+          Panelist, <em>Authority, Compliance and Agent Interactions</em>. The argument: an
+          instruction is not a control. In critical agentic applications, autonomy is earned
+          progressively, one verified decision at a time.
+        </div>
+      </li>
+      <li>
+        <span class="date">2026-09-14</span>
+        <div>
+          <strong>IIA Silicon Valley AI Summit</strong>. Panelist, <em>The Agent Attention Economy</em>:
+          what happens to discovery, advertising and trust when the buyer is an agent. The
+          retailer and marketplace seat.
+        </div>
+      </li>
+    </ul>
+    <p class="section-note">
+      Writing lives on <a href="https://www.linkedin.com/in/vikramgodbole/recent-activity/all/">LinkedIn</a>,
+      starting with the Barony launch post.
+    </p>
+  </section>
+
+  <section id="contact" aria-labelledby="contact-h">
+    <h2 id="contact-h">Contact</h2>
+    <p class="links">
+      <a href="mailto:vikramggg@hotmail.com" class="btn">vikramggg@hotmail.com</a>
+      <a href="https://www.linkedin.com/in/vikramgodbole" rel="me">linkedin.com/in/vikramgodbole</a>
+      <a href="https://github.com/vggg" rel="me">github.com/vggg</a>
+    </p>
+  </section>
+
+</main>
+
+<footer>
+  <p>Built with an AI agent, directed by Vikram. No tracking.</p>
+</footer>
+
+</body>
+</html>
