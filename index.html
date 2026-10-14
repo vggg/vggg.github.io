@@ -86,6 +86,8 @@
           <dd>A presentation is a compiled communication product. If the argument lives in reviewable structured source (claims, evidence, dependencies, the decision being asked for), one source can compile into a ten-minute leadership briefing or a forty-five-minute engineering talk, for PPTX, web, PDF or video, without rebuilding the deck by hand.</dd>
           <dt>Result so far</dt>
           <dd>A thesis, a visual grammar and nine ratified architecture decisions, plus a working TypeScript prototype: a deterministic compiler that lowers, verifies and emits slides, measures text against real font metrics and checks renders in Chromium; a Fastify API, thin CLI and browser editor over PostgreSQL; provider-agnostic model adapters with reserve-before-dispatch spend metering; and a hosted agent that repairs deterministically first and escalates to a model only under a frozen policy. An offline eval suite scores its defect detectors. The prototype does not yet implement the whole thesis.</dd>
+          <dt>Agentic workflow</dt>
+          <dd>The model proposes; the application decides. A hosted agent loop plans, constructs, tests and revises decks against compiler feedback: deterministic planning, measurement and repair first, escalation to a model only on a configured trigger, every tool call checked for permissions and arguments, every candidate verified in a real render before a guarded commit. A model's completion message cannot skip a check or advance a revision. Spend is reserved before dispatch and settled honestly, and interrupted work is reconciled without resending unknown calls.</dd>
           <dt>Stack</dt>
           <dd>TypeScript, Fastify, PostgreSQL, Playwright and Chromium, zod, OpenAI, Anthropic and OpenRouter adapters</dd>
         </dl>
@@ -127,17 +129,36 @@
         <h3>Shuttler: badminton match analysis</h3>
         <p class="tagline">Computer vision and match-analytics prototype from one phone clip.</p>
         <figure class="video" id="shuttler-video">
-          <button class="video-facade" type="button" data-yt="Q_oMZMiVAKc" aria-label="Play the Shuttler demo video, 15 seconds">
-            <img src="https://i.ytimg.com/vi/Q_oMZMiVAKc/maxresdefault.jpg" alt="" width="1280" height="720" loading="lazy" decoding="async">
-            <span class="play" aria-hidden="true"></span>
-          </button>
-          <figcaption>Dashboard render on an anonymized clip, 15 seconds: shuttle trail, player movement, running score. All faces blurred. No raw footage is ever shown. Plays from YouTube when you press play.</figcaption>
+          <div class="carousel" data-carousel>
+            <div class="slides">
+              <div class="slide" data-caption="Dashboard render on an anonymized clip, 15 seconds: shuttle trail, player movement, running score. Faces blurred.">
+                <button class="video-facade" type="button" data-yt="Q_oMZMiVAKc" aria-label="Play video 1 of 2: Shuttler dashboard demo, 15 seconds">
+                  <img src="https://i.ytimg.com/vi/Q_oMZMiVAKc/maxresdefault.jpg" alt="" width="1280" height="720" loading="lazy" decoding="async">
+                  <span class="play" aria-hidden="true"></span>
+                </button>
+              </div>
+              <div class="slide" data-caption="Tracking overlay on match footage: rally index, calibration confidence and the running score drawn live over the clip." hidden>
+                <button class="video-facade" type="button" data-yt="LuaByh6eM8I" aria-label="Play video 2 of 2: Shuttler tracking demo">
+                  <img src="https://i.ytimg.com/vi/LuaByh6eM8I/maxresdefault.jpg" alt="" width="1280" height="720" loading="lazy" decoding="async">
+                  <span class="play" aria-hidden="true"></span>
+                </button>
+              </div>
+            </div>
+            <div class="carousel-nav">
+              <button type="button" class="nav-btn" data-dir="-1" aria-label="Previous video">&#8249;</button>
+              <span class="dots" aria-hidden="true"><i class="on"></i><i></i></span>
+              <span class="counter" aria-live="polite">1 / 2</span>
+              <button type="button" class="nav-btn" data-dir="1" aria-label="Next video">&#8250;</button>
+            </div>
+          </div>
+          <figcaption data-caption-target>Dashboard render on an anonymized clip, 15 seconds: shuttle trail, player movement, running score. Faces blurred.</figcaption>
+          <p class="video-note">Videos play from YouTube when you press play.</p>
         </figure>
         <dl class="notebook">
           <dt>Hypothesis</dt>
           <dd>Rally structure, tempo, player movement and a running score can be extracted from standard single-camera phone video, with no specialized tracking hardware.</dd>
           <dt>Result so far</dt>
-          <dd>Shuttle detection 0.992 on clean footage. Rally recall 0.73 through a vision-language model where the geometry pipeline scored 0.00. 1,184 tests. Eight probes, replicated at a second venue, showed ordinary footage does not record the shuttle near contact, so landing, line calls and winner stay held and the report says so. Privacy is fail-closed: blur-when-unsure for minors, and raw video never served. Invite-only beta on Cloud Run. Private repository.</dd>
+          <dd>Shuttle detection 0.992 on clean footage. Rally recall 0.73 through a vision-language model where the geometry pipeline scored 0.00. 1,184 tests. Eight probes, replicated at a second venue, showed ordinary footage does not record the shuttle near contact, so landing, line calls and winner stay held and the report says so. Privacy in the product is fail-closed: blur-when-unsure for minors, and raw video never served to share-link viewers. Invite-only beta on Cloud Run. Private repository.</dd>
           <dt>Stack</dt>
           <dd>Python, OpenCV, TrackNet shuttle tracking, YOLO player tracking, vision-language rally segmentation, Cloud Run</dd>
         </dl>
@@ -188,10 +209,28 @@ document.querySelectorAll('.video-facade').forEach(function (b) {
   b.addEventListener('click', function () {
     var f = document.createElement('iframe');
     f.src = 'https://www.youtube-nocookie.com/embed/' + b.dataset.yt + '?autoplay=1&rel=0';
-    f.title = 'Shuttler demo video';
+    f.title = b.getAttribute('aria-label');
     f.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
     f.setAttribute('allowfullscreen', '');
     b.replaceWith(f);
+  });
+});
+document.querySelectorAll('[data-carousel]').forEach(function (c) {
+  var slides = c.querySelectorAll('.slide'), dots = c.querySelectorAll('.dots i');
+  var counter = c.querySelector('.counter'), cap = c.parentNode.querySelector('[data-caption-target]');
+  var i = 0;
+  function show(n) {
+    i = (n + slides.length) % slides.length;
+    slides.forEach(function (s, k) {
+      s.hidden = k !== i;
+      var fr = s.querySelector('iframe'); if (fr && k !== i) { fr.src = fr.src; }
+    });
+    dots.forEach(function (d, k) { d.className = k === i ? 'on' : ''; });
+    counter.textContent = (i + 1) + ' / ' + slides.length;
+    if (cap) cap.textContent = slides[i].dataset.caption;
+  }
+  c.querySelectorAll('.nav-btn').forEach(function (b) {
+    b.addEventListener('click', function () { show(i + Number(b.dataset.dir)); });
   });
 });
 </script>

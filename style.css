@@ -100,6 +100,17 @@ section { margin: 3.5rem 0; }
 .video-facade:hover .play, .video-facade:focus-visible .play { opacity: 1; transform: scale(1.05); }
 .video-facade:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 .video figcaption { font-size: 0.85rem; color: var(--muted); margin-top: 0.5rem; }
+.video-note { font-size: 0.8rem; color: var(--muted); margin: 0.25rem 0 0; }
+.carousel-nav { display: flex; align-items: center; justify-content: center; gap: 0.8rem; margin-top: 0.6rem; }
+.nav-btn {
+  background: var(--surface-2); color: var(--text); border: 1px solid var(--line-strong); border-radius: 8px;
+  width: 2.2rem; height: 2.2rem; font-size: 1.3rem; line-height: 1; cursor: pointer;
+}
+.nav-btn:hover { border-color: var(--accent); color: var(--accent); }
+.nav-btn:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.dots i { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--line-strong); margin: 0 3px; }
+.dots i.on { background: var(--accent); }
+.counter { font-size: 0.8rem; color: var(--muted); font-variant-numeric: tabular-nums; }
 
 .snapshot { padding: 1.5rem; }
 .snap { margin: 0; }
