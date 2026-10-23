@@ -195,7 +195,7 @@
             <h3>Shuttler</h3>
             <p>Badminton analysis from a single phone video. It finds the rallies, tracks the shuttle and suggests something to work on.</p>
             <p class="learned-label">What I learned</p>
-            <p>A phone on a tripod sees a lot less than you'd hope. My first approach, pure geometry, found none of 15 rallies on real footage from a hall full of courts. A vision-language model found 11. So I stopped trying to make it call everything: line calls and winners are left out, and the report says why. Since these are public halls, the blurring step blurs anyone it isn't sure about.</p>
+            <p>A phone on a tripod sees a lot less than you'd hope. My first approach, pure geometry, found none of 15 rallies on real footage from a hall full of courts, mostly because the shuttle is a few pixels wide or not visible at all. So I stopped looking for the shuttle and had a vision-language model read the players instead, zero-shot, with no badminton training data. It found 11. So I stopped trying to make it call everything: line calls and winners are left out, and the report says why. Since these are public halls, the blurring step blurs anyone it isn't sure about.</p>
             <figure class="video">
               <button class="video-facade" type="button" data-yt="Q_oMZMiVAKc" aria-label="Play video: Shuttler on an anonymized clip, 14 seconds">
                 <img src="https://i.ytimg.com/vi/Q_oMZMiVAKc/maxresdefault.jpg" alt="" width="1280" height="720" loading="lazy" decoding="async">
@@ -212,9 +212,18 @@
                   <li><b>Court calibration</b>auto-detected, with tap-the-corners as a fallback</li>
                   <li><b>Shuttle</b>tracked with TrackNet</li>
                   <li><b>Players</b>detected with YOLO, near and far side</li>
-                  <li><b>Rallies</b>found by a vision-language model reading the players</li>
+                  <li><b>Rallies</b>from the shuttle track, or zero-shot from the players (below)</li>
                   <li><b>Report</b>tempo, a coaching cue, and what it couldn't call</li>
                 </ol>
+                <h4>The zero-shot route the beta runs</h4>
+                <ol class="flow">
+                  <li><b>Phone video</b>uploaded to the beta</li>
+                  <li><b>Sample frames</b>pulled from the clip</li>
+                  <li class="gate"><b>Zero-shot VLM</b>reads player posture; labels each frame active, dead or unsure</li>
+                  <li><b>Rallies and tempo</b>stitched from those labels</li>
+                  <li><b>Report</b>winners and movement marked "not available" rather than guessed</li>
+                </ol>
+                <p class="flow-note">It never needs to see the shuttle, so the limit that sinks the geometry route doesn't apply. It also runs without a GPU, which is why the hosted beta uses it.</p>
                 <figure class="shot">
                   <img src="assets/shuttler-report.jpg" alt="Shuttler match report on a synthetic clip: coaching cue, rallies called and held, tempo, and a list of what one camera can't tell you" width="900" height="942" loading="lazy" decoding="async">
                   <figcaption>The report, on a synthetic test clip. "What we can't tell you" is part of the report, not fine print.</figcaption>
