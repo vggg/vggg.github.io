@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Vikram Godbole | Engineering executive who still builds</title>
-<meta name="description" content="Vikram Godbole: engineering executive who still builds. Ran Walmart Commerce Platform (250+ engineers) and five walmart.com business lines. Now builds agentic systems hands-on, including Barony, open source on PyPI, and speaks on agent governance.">
+<meta name="description" content="Vikram Godbole: engineering executive who still builds. Led 250+ engineers on Walmart Commerce Platform and served as single-threaded technology owner for five walmart.com business lines. Now builds agentic systems hands-on, including Barony, open source on PyPI, and speaks on agent governance.">
 <link rel="canonical" href="https://vggg.github.io/">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#f7f6f2" media="(prefers-color-scheme: light)">
@@ -53,11 +53,8 @@
       <div class="hero-copy">
         <img class="portrait" src="assets/vikram.jpg" alt="Portrait of Vikram Godbole" width="200" height="200">
         <h1 id="hero-h"><span class="name">Vikram Godbole</span><span class="headline">Engineering executive who still builds.</span></h1>
-        <p class="proof">Twelve years at Walmart, from individual contributor to leading <strong>250+ engineers</strong> on Walmart Commerce Platform and owning <strong>five walmart.com business lines</strong>.</p>
+        <p class="proof">Twelve years at Walmart, from individual contributor to leading <strong>250+ engineers</strong> on Walmart Commerce Platform and serving as single-threaded technology owner for <strong>five walmart.com business lines</strong>.</p>
         <p class="proof">Now I build agentic systems hands-on, including <strong>Barony</strong>, an open-source governance framework for AI coding agents, and I speak on how to govern them.</p>
-        <!-- FOR VIKRAM: optional line, off by default. Uncomment to say you are open to roles.
-        <p class="open-to">Open to senior engineering leadership roles.</p>
-        -->
         <div class="cta">
           <a class="btn btn-primary" href="mailto:vikramggg@hotmail.com">Email me</a>
           <a class="btn" href="https://www.linkedin.com/in/vikramgodbole" rel="me">Résumé on LinkedIn</a>
@@ -69,7 +66,7 @@
         <h2 id="glance-h" class="kicker">At a glance</h2>
         <dl>
           <div><dt>Led</dt><dd>Walmart Commerce Platform, 250+ engineers across the U.S. and India</dd></div>
-          <div><dt>Owned</dt><dd>Five walmart.com business lines, ~$150M GMV, as single-threaded technology owner</dd></div>
+          <div><dt>Tech owner</dt><dd>Five walmart.com business lines, ~$150M GMV</dd></div>
           <div><dt>Building</dt><dd>Barony, open source and on PyPI, plus a claims-verification engine</dd></div>
           <div><dt>Speaking</dt><dd>Panelist at AI Realized (SF Tech Week) and the Silicon Valley AI Summit, 2026</dd></div>
         </dl>
@@ -127,7 +124,7 @@
           <ul class="evidence">
             <li>Deterministic checks, such as figure comparison and attribution-strength arithmetic, decide support. A language model only decides what a sentence is about, never whether it is supported.</li>
             <li>An independent adversary repo injects known-bad claims without seeing the detector code. The detector killed <strong>37 of 37</strong> in a small development-time corpus, after two earlier rounds exposed and fixed real detector gaps.</li>
-            <li>Flagged <strong>0 of 52</strong> harmless edits in the invariance run.</li>
+            <li>Flagged <strong>0 of 52</strong> harmless edits in the invariance run: a small sample, so the false-positive rate is bounded, not proven zero.</li>
             <li>Postgres ledger with row-level security, served over HTTP and MCP; an agent-to-agent orchestrator; traces that carry ledger references, never claim content. <strong>437 tests</strong> across a 14-package workspace.</li>
           </ul>
         </div>
@@ -148,7 +145,7 @@
         </div>
         <div class="project-body">
           <ul class="evidence">
-            <li><strong>204 merged pull requests</strong> between May 13 and June 7, 2026, built with a directed agent fleet of developer, analyst and designer agents. Complete since June.</li>
+            <li><strong>204 merged pull requests</strong> between May 13 and June 7, 2026, built with a directed agent fleet of developer, analyst and designer agents. No commits since June 7, 2026.</li>
             <li>pgvector similarity search over per-plant embeddings, built from the vision model's structured description of each plant.</li>
             <li>Per-feature model fallback chains with rate-limit retry, and a prompt-injection guard on model inputs.</li>
             <li>About <strong>1,400</strong> unit and integration tests and <strong>137</strong> end-to-end tests.</li>
@@ -174,9 +171,9 @@
         <div class="project-body">
           <ul class="evidence">
             <li>Shuttle detection <strong>0.992</strong> on one clip (238 of 240 within 25 px) against a 0.85 gate written into the eval harness.</li>
-            <li>Rally recall <strong>0.58 to 0.73</strong> across two clips with a vision-language model, where the geometry path scored 0.00 on real multi-court footage.</li>
-            <li>Eight capture-ceiling probes, replicated at a second venue, showed what ordinary footage cannot support, so landing, line calls and winners are held and the report says so.</li>
-            <li><strong>1,184 tests</strong> and <strong>178</strong> merged pull requests from a directed agent fleet. Privacy fails closed: when unsure, blur.</li>
+            <li>Rally recall with a vision-language model: <strong>0.73</strong> (11 of 15) on a held-out clip and 0.58 to 0.70 on a second set it was tuned on. The geometry path scored 0.00 on real multi-court footage.</li>
+            <li>Eight capture-ceiling probes, one replicated at a second venue, showed what ordinary footage cannot support, so line calls, winners and landing points are held and the report says so.</li>
+            <li><strong>1,184 tests</strong> and <strong>178</strong> merged pull requests from a directed agent fleet. The anonymization guard fails closed: when unsure whether a person is a minor, the pipeline blurs. Blurring runs offline, not in the hosted beta.</li>
           </ul>
           <figure class="video">
             <button class="video-facade" type="button" data-yt="Q_oMZMiVAKc" aria-label="Play video: Shuttler dashboard render on an anonymized clip, 14 seconds">
@@ -184,7 +181,6 @@
               <span class="play" aria-hidden="true"></span>
             </button>
             <figcaption>Dashboard render on an anonymized clip, 14 seconds: shuttle trail, player movement, running score. Faces blurred. Plays from YouTube when you press play.</figcaption>
-            <!-- FOR VIKRAM: second Shuttler video (LuaByh6eM8I, tracking overlay on match footage) removed from this page; held pending your re-confirmation. -->
           </figure>
         </div>
       </article>
@@ -209,7 +205,7 @@
         </div>
       </article>
 
-      <p class="also">Also built, now paused: a micro-drone navigation prototype on low-power edge hardware.</p>
+      <p class="also">Also built, now paused: a micro-drone hardware prototype.</p>
     </div>
   </section>
 
@@ -231,8 +227,8 @@
           <figcaption>AI Realized panel, San Francisco, October 2026</figcaption>
         </figure>
         <figure class="quote">
-          <blockquote><p>Autonomy is earned progressively, one verified decision at a time.</p></blockquote>
-          <figcaption>LinkedIn, October 2026</figcaption>
+          <blockquote><p>In critical agentic applications, autonomy is earned progressively, one verified decision at a time.</p></blockquote>
+          <figcaption>LinkedIn, October 8, 2026</figcaption>
         </figure>
       </div>
 
@@ -256,7 +252,6 @@
           </div>
         </li>
         <li class="event">
-          <!-- FOR VIKRAM: please confirm the role (panelist or roundtable participant), the exact event name and the date. -->
           <p class="event-date"><time datetime="2026-08-03">Aug 3, 2026</time></p>
           <div>
             <p class="event-role">Roundtable participant</p>
@@ -268,8 +263,8 @@
           <p class="event-date"><time datetime="2026-05-27">May 27, 2026</time></p>
           <div>
             <p class="event-role">Mentor and semi-final judge</p>
-            <h3>Walmart Marketplace AI Hackathon</h3>
-            <p class="event-where">Internal event, Sunnyvale.</p>
+            <h3>Internal marketplace AI hackathon, Walmart</h3>
+            <p class="event-where">Sunnyvale.</p>
           </div>
         </li>
       </ol>
@@ -281,7 +276,7 @@
       <header class="section-head">
         <p class="kicker">Where I've led</p>
         <h2 id="leadership-h">Twelve years at Walmart, engineer to executive</h2>
-        <!-- FOR VIKRAM: no job title shown yet. Add your final title here once confirmed. -->
+        <p class="role-line">Senior Director of Software Engineering, Walmart (2023 to 2026): Walmart Commerce Platform, then Local and Specialty Marketplace.</p>
         <p class="section-lede">Platform scale, lean single-threaded ownership and AI in production. My organizations delivered the work below; the verbs say what was mine.</p>
       </header>
 
@@ -297,9 +292,9 @@
           <p>Single-threaded technology owner for five walmart.com business lines (~$150M GMV), owning roadmap and architecture. Scaled a lean pod model from one business line to five.</p>
         </article>
         <article class="led">
-          <p class="figure">#49 <span>to</span> 1,500+</p>
+          <p class="figure">#49 <span>of 50</span></p>
           <h3>Walmart's first restaurant marketplace</h3>
-          <p>Backed Walmart's first restaurant marketplace when the backlog ranked it #49 of 50: re-ran the economics, won ~10 engineers and led Marketplace engineering from a 15-store pilot to 56 stores in under three months. The program now runs in 1,500+ stores.</p>
+          <p>Backed Walmart's first restaurant marketplace when the backlog ranked it #49 of 50: re-ran the economics, won ~10 engineers and led Marketplace engineering from a 15-store pilot to 56 stores in under three months. The marketplace has since grown to 1,500+ stores.</p>
         </article>
         <article class="led">
           <p class="figure">3</p>
@@ -337,7 +332,7 @@
 
 <footer class="foot">
   <div class="wrap">
-    <p>Built with an AI agent, directed by Vikram. Figures as of October 2026. No tracking.</p>
+    <p>Built with an AI agent, directed by Vikram. Figures as of October 2026. No analytics and no cookies of its own.</p>
   </div>
 </footer>
 

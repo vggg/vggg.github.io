@@ -150,7 +150,6 @@ h1 .headline {
 }
 .proof { font-size: clamp(1.05rem, 1.6vw, 1.2rem); color: var(--text-2); max-width: 40rem; margin: 1.4rem 0 0; line-height: 1.55; }
 .proof + .proof { margin-top: .8rem; }
-.open-to { margin-top: 1.2rem; font-weight: 600; }
 
 .glance {
   background: var(--surface); border: 1px solid var(--line); border-radius: 16px;
@@ -169,6 +168,7 @@ h1 .headline {
 .section-head h2, .contact h2 {
   font: 500 clamp(1.9rem, 4vw, 2.8rem)/1.1 var(--serif); letter-spacing: -.02em; margin-bottom: 1rem;
 }
+.role-line { font-weight: 600; color: var(--text); margin: 0 0 .6rem; max-width: 42rem; }
 .section-lede { color: var(--text-2); font-size: 1.08rem; margin: 0; max-width: 42rem; }
 
 /* Projects */
@@ -240,7 +240,7 @@ figcaption { font-size: .86rem; color: var(--muted); margin-top: .6rem; }
 }
 .quote blockquote { margin: 0; }
 .quote blockquote p {
-  font: 500 clamp(1.35rem, 2.2vw, 1.65rem)/1.25 var(--serif); letter-spacing: -.01em; margin: 0 0 1.4rem; color: var(--text);
+  font: 500 clamp(1.25rem, 1.9vw, 1.45rem)/1.3 var(--serif); letter-spacing: -.01em; margin: 0 0 1.4rem; color: var(--text);
 }
 .quote blockquote p::before { content: "\201C"; color: var(--accent); margin-right: .05em; }
 .quote blockquote p::after { content: "\201D"; color: var(--accent); }
