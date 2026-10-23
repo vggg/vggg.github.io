@@ -198,6 +198,8 @@ figcaption { font-size: .85rem; color: var(--muted); margin-top: .5rem; }
 .arch .b, .lightbox .b { fill: var(--surface); stroke: var(--line-strong); }
 .arch .b.hl, .lightbox .b.hl { stroke: var(--accent); stroke-width: 1.6; }
 .arch .loop, .lightbox .loop { fill: none; stroke: var(--line-strong); stroke-dasharray: 4 4; }
+.arch .b.human, .lightbox .b.human { stroke: var(--accent); stroke-dasharray: 4 3; }
+.arch .wall, .lightbox .wall { stroke: var(--accent); stroke-dasharray: 6 4; stroke-width: 1.4; }
 .arch-zoom { display: block; margin-top: .5rem; font-size: .8rem; font-weight: 600; color: var(--accent); }
 .lightbox { width: min(1100px, calc(100vw - 2rem)); max-width: none; max-height: calc(100vh - 2rem); padding: 1rem; border: 1px solid var(--line-strong); border-radius: 12px; background: var(--bg); color: var(--text); overflow: auto; }
 .lightbox::backdrop { background: rgba(10, 12, 14, .7); }

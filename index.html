@@ -27,7 +27,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap">
-<link rel="stylesheet" href="style.css?v=14">
+<link rel="stylesheet" href="style.css?v=15">
 </head>
 <body>
 
@@ -159,23 +159,67 @@
             <details class="more">
               <summary>How it works</summary>
               <div class="more-body">
-                <h4>Checking a document</h4>
-                <ol class="flow">
-                  <li><b>Document</b>PDF or Word</li>
-                  <li><b>Two extractors</b>independent, per format, so one parser's mistakes show up</li>
-                  <li><b>Claim mapping</b>the model matches each sentence to a subject, nothing more</li>
-                  <li><b>Ledger</b>sourced facts in Postgres, row-level security</li>
-                  <li class="gate"><b>Checks</b>plain code: figures, precision, how strongly a source supports it</li>
-                  <li><b>Verdict</b>pass or fail, every reason cites a ledger row</li>
-                </ol>
-                <h4>Testing it with an adversary</h4>
-                <ol class="flow">
-                  <li><b>Clean baseline</b>a document that should pass</li>
-                  <li><b>Adversary</b>separate repo, sandboxed so it can't read the checker</li>
-                  <li><b>Plants defects</b>changed figures, inflated claims, unsourced lines</li>
-                  <li class="gate"><b>Checker runs</b>caught or missed, per defect</li>
-                  <li><b>Harmless edits</b>should not be flagged: 0 of 52 were</li>
-                </ol>
+                <h4>Architecture</h4>
+                <figure class="arch">
+                  <button class="arch-open" type="button" aria-label="Open the claims checker architecture diagram full size">
+<svg viewBox="0 0 760 338" role="img" aria-labelledby="claims-t claims-d">
+<title id="claims-t">Claims checker architecture</title>
+<desc id="claims-d">The checker extracts a document with two independent extractors, a model maps each sentence to a subject only, plain-code checks compare it against a Postgres claims ledger, and the verdict cites ledger rows. A separate adversary repo, which cannot read the checker's code, plants defects into clean documents and scores what was caught, and checks that harmless edits are not flagged.</desc>
+<defs><marker id="arw-claims" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="currentColor"/></marker></defs>
+<g font-family="Inter, system-ui, sans-serif" fill="currentColor">
+<rect x="10" y="24" width="740" height="150" rx="10" class="loop"/>
+<text x="22" y="40" font-size="10" letter-spacing="1.5" opacity=".7" text-anchor="start">THE CHECKER</text>
+<rect x="22" y="52" width="100" height="36" rx="6" class="b"/>
+<text x="72.0" y="67.5" text-anchor="middle" font-size="10">Document</text>
+<text x="72.0" y="79.5" text-anchor="middle" font-size="9" opacity=".85">PDF or Word</text>
+<rect x="140" y="52" width="124" height="36" rx="6" class="b"/>
+<text x="202.0" y="67.5" text-anchor="middle" font-size="10">Two extractors</text>
+<text x="202.0" y="79.5" text-anchor="middle" font-size="9" opacity=".85">independent, per format</text>
+<rect x="282" y="52" width="132" height="36" rx="6" class="b hl"/>
+<text x="348.0" y="67.5" text-anchor="middle" font-size="10">Claim mapping</text>
+<text x="348.0" y="79.5" text-anchor="middle" font-size="9" opacity=".85">model: subject only</text>
+<rect x="432" y="52" width="140" height="36" rx="6" class="b"/>
+<text x="502.0" y="67.5" text-anchor="middle" font-size="10">Checks in plain code</text>
+<text x="502.0" y="79.5" text-anchor="middle" font-size="9" opacity=".85">figures, strength, precision</text>
+<rect x="590" y="52" width="148" height="36" rx="6" class="b"/>
+<text x="664.0" y="67.5" text-anchor="middle" font-size="10">Verdict</text>
+<text x="664.0" y="79.5" text-anchor="middle" font-size="9" opacity=".85">pass/fail, cites ledger rows</text>
+<path d="M122 70H140" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".8" marker-end="url(#arw-claims)"/>
+<path d="M264 70H282" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".8" marker-end="url(#arw-claims)"/>
+<path d="M414 70H432" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".8" marker-end="url(#arw-claims)"/>
+<path d="M572 70H590" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".8" marker-end="url(#arw-claims)"/>
+<rect x="282" y="118" width="290" height="40" rx="6" class="b"/>
+<text x="427.0" y="135.5" text-anchor="middle" font-size="10">Claims ledger</text>
+<text x="427.0" y="147.5" text-anchor="middle" font-size="9" opacity=".85">Postgres, row-level security; served over HTTP and MCP</text>
+<path d="M348 118V88" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".8" marker-end="url(#arw-claims)"/>
+<path d="M502 118V88" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".8" marker-end="url(#arw-claims)"/>
+<path d="M10 192H750" fill="none" class="wall"/>
+<text x="440" y="188" text-anchor="middle" font-size="8" opacity=".8">read-deny wall: the adversary never sees the checker's code</text>
+<rect x="10" y="204" width="740" height="100" rx="10" class="loop"/>
+<text x="738" y="220" font-size="10" letter-spacing="1.5" opacity=".7" text-anchor="end">THE ADVERSARY (SEPARATE REPO, SANDBOXED)</text>
+<rect x="22" y="236" width="120" height="36" rx="6" class="b"/>
+<text x="82.0" y="251.5" text-anchor="middle" font-size="10">Clean baseline</text>
+<text x="82.0" y="263.5" text-anchor="middle" font-size="9" opacity=".85">should pass</text>
+<rect x="160" y="236" width="250" height="36" rx="6" class="b"/>
+<text x="285.0" y="251.5" text-anchor="middle" font-size="10">Planted defects</text>
+<text x="285.0" y="263.5" text-anchor="middle" font-size="9" opacity=".85">changed figures, inflated claims, unsourced lines</text>
+<rect x="428" y="236" width="150" height="36" rx="6" class="b"/>
+<text x="503.0" y="251.5" text-anchor="middle" font-size="10">Score</text>
+<text x="503.0" y="263.5" text-anchor="middle" font-size="9" opacity=".85">caught or missed, per type</text>
+<rect x="596" y="236" width="142" height="36" rx="6" class="b"/>
+<text x="667.0" y="251.5" text-anchor="middle" font-size="10">Harmless edits</text>
+<text x="667.0" y="263.5" text-anchor="middle" font-size="9" opacity=".85">0 of 52 flagged</text>
+<path d="M142 254H160" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".8" marker-end="url(#arw-claims)"/>
+<path d="M200 236V104H72V88" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".8" marker-end="url(#arw-claims)"/>
+<text x="140" y="100" text-anchor="middle" font-size="8" opacity=".8">planted into documents</text>
+<path d="M664 88V198H503V236" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".8" marker-end="url(#arw-claims)"/>
+<text x="700" y="140" text-anchor="middle" font-size="8" opacity=".8">verdicts</text>
+<text x="10" y="326" font-size="10" opacity=".85">The model decides what a sentence is about. Plain code decides whether it is supported.</text>
+</g>
+</svg>
+<span class="arch-zoom" aria-hidden="true">Click to enlarge</span></button>
+                  <figcaption>Two repos. The adversary plants defects without ever seeing the checker's code.</figcaption>
+                </figure>
                 <h4>Details</h4>
                 <ul>
                   <li>The very first measurement found a bug in my own mapper, which is the best argument I know for measuring early.</li>
@@ -206,24 +250,70 @@
             <details class="more">
               <summary>How it works</summary>
               <div class="more-body">
-                <h4>The vision pipeline</h4>
-                <ol class="flow">
-                  <li><b>Phone video</b>one camera</li>
-                  <li><b>Court calibration</b>auto-detected, with tap-the-corners as a fallback</li>
-                  <li><b>Shuttle</b>tracked with TrackNet</li>
-                  <li><b>Players</b>detected with YOLO, near and far side</li>
-                  <li><b>Rallies</b>from the shuttle track, or zero-shot from the players (below)</li>
-                  <li><b>Report</b>tempo, a coaching cue, and what it couldn't call</li>
-                </ol>
-                <h4>The zero-shot route the beta runs</h4>
-                <ol class="flow">
-                  <li><b>Phone video</b>uploaded to the beta</li>
-                  <li><b>Sample frames</b>pulled from the clip</li>
-                  <li class="gate"><b>Zero-shot VLM</b>reads player posture; labels each frame active, dead or unsure</li>
-                  <li><b>Rallies and tempo</b>stitched from those labels</li>
-                  <li><b>Report</b>winners and movement marked "not available" rather than guessed</li>
-                </ol>
-                <p class="flow-note">It never needs to see the shuttle, so the limit that sinks the geometry route doesn't apply. It also runs without a GPU, which is why the hosted beta uses it.</p>
+                <h4>Architecture</h4>
+                <figure class="arch">
+                  <button class="arch-open" type="button" aria-label="Open the Shuttler architecture diagram full size">
+<svg viewBox="0 0 760 290" role="img" aria-labelledby="shuttler-t shuttler-d">
+<title id="shuttler-t">Shuttler architecture: two routes to one report</title>
+<desc id="shuttler-d">One phone video goes down two routes. The geometry route, run locally with a GPU, calibrates the court, tracks the shuttle with TrackNet, detects players with YOLO and finds rallies and outcomes, abstaining when unsure. The zero-shot route, which the hosted beta runs without a GPU, samples frames and has a vision-language model read player posture to find rallies and tempo. Both feed a match report that lists what one camera cannot call. An eval harness sets a numeric gate per phase, and an anonymization guard blurs anyone it is unsure about and verifies the blur.</desc>
+<defs><marker id="arw-shuttler" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="currentColor"/></marker></defs>
+<g font-family="Inter, system-ui, sans-serif" fill="currentColor">
+<text x="10" y="14" font-size="10" letter-spacing="1.5" opacity=".7" text-anchor="start">ONE PHONE VIDEO, TWO ROUTES, ONE HONEST REPORT</text>
+<rect x="10" y="118" width="100" height="44" rx="6" class="b"/>
+<text x="60.0" y="137.5" text-anchor="middle" font-size="10">Phone video</text>
+<text x="60.0" y="149.5" text-anchor="middle" font-size="9" opacity=".85">one camera</text>
+<rect x="128" y="26" width="446" height="104" rx="10" class="loop"/>
+<text x="140" y="42" font-size="10" letter-spacing="1.5" opacity=".7" text-anchor="start">GEOMETRY ROUTE (LOCAL, GPU)</text>
+<rect x="140" y="58" width="104" height="40" rx="6" class="b"/>
+<text x="192.0" y="75.5" text-anchor="middle" font-size="10">Calibration</text>
+<text x="192.0" y="87.5" text-anchor="middle" font-size="9" opacity=".85">auto, or tap corners</text>
+<rect x="256" y="58" width="94" height="40" rx="6" class="b"/>
+<text x="303.0" y="75.5" text-anchor="middle" font-size="10">Shuttle</text>
+<text x="303.0" y="87.5" text-anchor="middle" font-size="9" opacity=".85">TrackNet</text>
+<rect x="362" y="58" width="94" height="40" rx="6" class="b"/>
+<text x="409.0" y="75.5" text-anchor="middle" font-size="10">Players</text>
+<text x="409.0" y="87.5" text-anchor="middle" font-size="9" opacity=".85">YOLO detection</text>
+<rect x="468" y="58" width="94" height="40" rx="6" class="b"/>
+<text x="515.0" y="75.5" text-anchor="middle" font-size="10">Rallies, outcomes</text>
+<text x="515.0" y="87.5" text-anchor="middle" font-size="9" opacity=".85">abstains if unsure</text>
+<path d="M244 78H256" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".8" marker-end="url(#arw-shuttler)"/>
+<path d="M350 78H362" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".8" marker-end="url(#arw-shuttler)"/>
+<path d="M456 78H468" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".8" marker-end="url(#arw-shuttler)"/>
+<rect x="128" y="150" width="446" height="104" rx="10" class="loop"/>
+<text x="140" y="166" font-size="10" letter-spacing="1.5" opacity=".7" text-anchor="start">ZERO-SHOT ROUTE (HOSTED BETA, NO GPU)</text>
+<rect x="140" y="184" width="118" height="40" rx="6" class="b"/>
+<text x="199.0" y="201.5" text-anchor="middle" font-size="10">Sample frames</text>
+<text x="199.0" y="213.5" text-anchor="middle" font-size="9" opacity=".85">from the clip</text>
+<rect x="272" y="184" width="170" height="40" rx="6" class="b hl"/>
+<text x="357.0" y="201.5" text-anchor="middle" font-size="10">Zero-shot VLM</text>
+<text x="357.0" y="213.5" text-anchor="middle" font-size="9" opacity=".85">reads player posture</text>
+<rect x="456" y="184" width="106" height="40" rx="6" class="b"/>
+<text x="509.0" y="201.5" text-anchor="middle" font-size="10">Rallies, tempo</text>
+<text x="509.0" y="213.5" text-anchor="middle" font-size="9" opacity=".85">from the labels</text>
+<path d="M258 204H272" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".8" marker-end="url(#arw-shuttler)"/>
+<path d="M442 204H456" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".8" marker-end="url(#arw-shuttler)"/>
+<path d="M110 140H120V78H140" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".8" marker-end="url(#arw-shuttler)"/>
+<path d="M110 140H120V204H140" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".8" marker-end="url(#arw-shuttler)"/>
+<rect x="592" y="112" width="158" height="56" rx="6" class="b"/>
+<text x="671.0" y="131.5" text-anchor="middle" font-size="10">Match report</text>
+<text x="671.0" y="143.5" text-anchor="middle" font-size="9" opacity=".85">tempo, coaching cue,</text>
+<text x="671.0" y="155.5" text-anchor="middle" font-size="9" opacity=".85">and what it can't call</text>
+<path d="M562 78H580V130H592" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".8" marker-end="url(#arw-shuttler)"/>
+<path d="M562 204H580V150H592" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".8" marker-end="url(#arw-shuttler)"/>
+<rect x="592" y="36" width="158" height="40" rx="6" class="b"/>
+<text x="671.0" y="53.5" text-anchor="middle" font-size="10">Eval harness</text>
+<text x="671.0" y="65.5" text-anchor="middle" font-size="9" opacity=".85">a numeric gate per phase</text>
+<path d="M671 76V112" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".8" stroke-dasharray="3 3" marker-end="url(#arw-shuttler)"/>
+<rect x="592" y="204" width="158" height="40" rx="6" class="b"/>
+<text x="671.0" y="221.5" text-anchor="middle" font-size="10">Anonymization guard</text>
+<text x="671.0" y="233.5" text-anchor="middle" font-size="9" opacity=".85">blur when unsure, then verify</text>
+<path d="M671 204V168" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".8" stroke-dasharray="3 3" marker-end="url(#arw-shuttler)"/>
+<text x="10" y="278" font-size="10" opacity=".85">The zero-shot route never needs to find the shuttle. Line calls, landing spots and shuttle speed are listed as things one camera cannot tell you.</text>
+</g>
+</svg>
+<span class="arch-zoom" aria-hidden="true">Click to enlarge</span></button>
+                  <figcaption>The hosted beta runs the zero-shot route: no GPU, and it never needs to find the shuttle.</figcaption>
+                </figure>
                 <figure class="shot">
                   <img src="assets/shuttler-report.jpg" alt="Shuttler match report on a synthetic clip: coaching cue, rallies called and held, tempo, and a list of what one camera can't tell you" width="900" height="942" loading="lazy" decoding="async">
                   <figcaption>The report, on a synthetic test clip. "What we can't tell you" is part of the report, not fine print.</figcaption>
@@ -261,14 +351,56 @@
             <details class="more">
               <summary>How it works</summary>
               <div class="more-body">
-                <ol class="flow">
-                  <li><b>Declare</b>each agent once: persona and manifest files</li>
-                  <li><b>baron CLI</b>validates, wires up, reports status</li>
-                  <li><b>Adapters</b>Claude Code, code-puppy, pydantic-ai, or generic</li>
-                  <li class="gate"><b>Guard</b>blocks a denied action before the tool runs, where the runtime allows it</li>
-                  <li><b>Git record</b>handoffs, findings, decisions, signed review verdicts</li>
-                  <li><b>Health</b>numbers on how well the team is actually behaving</li>
-                </ol>
+                <h4>Architecture</h4>
+                <figure class="arch">
+                  <button class="arch-open" type="button" aria-label="Open the Barony architecture diagram full size">
+<svg viewBox="0 0 760 276" role="img" aria-labelledby="barony-t barony-d">
+<title id="barony-t">Barony architecture</title>
+<desc id="barony-d">Each agent is declared once in persona and manifest files. The baron CLI validates them and wires them onto a runtime through adapters for Claude Code, code-puppy, pydantic-ai or a generic runtime. Where the runtime has a pre-tool hook, a guard blocks denied actions before the tool runs; every rule is labelled as enforced or only instructed. Agents' work lands in a collab repo in git, and baron health and memeval measure how the team is behaving.</desc>
+<defs><marker id="arw-barony" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="currentColor"/></marker></defs>
+<g font-family="Inter, system-ui, sans-serif" fill="currentColor">
+<text x="10" y="14" font-size="10" letter-spacing="1.5" opacity=".7" text-anchor="start">DECLARE ONCE, ENFORCE WHERE THE RUNTIME LETS YOU, RECORD IN GIT</text>
+<rect x="10" y="64" width="150" height="44" rx="6" class="b"/>
+<text x="85.0" y="83.5" text-anchor="middle" font-size="10">Declare each agent</text>
+<text x="85.0" y="95.5" text-anchor="middle" font-size="9" opacity=".85">persona + manifest YAML</text>
+<rect x="186" y="64" width="150" height="44" rx="6" class="b"/>
+<text x="261.0" y="83.5" text-anchor="middle" font-size="10">baron CLI</text>
+<text x="261.0" y="95.5" text-anchor="middle" font-size="9" opacity=".85">validate, hydrate, doctor</text>
+<path d="M160 86H186" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".8" marker-end="url(#arw-barony)"/>
+<rect x="362" y="26" width="160" height="152" rx="10" class="loop"/>
+<text x="374" y="42" font-size="9" letter-spacing="1.5" opacity=".7" text-anchor="start">ADAPTERS</text>
+<rect x="374" y="50" width="136" height="26" rx="6" class="b"/>
+<text x="442.0" y="66.5" text-anchor="middle" font-size="10">Claude Code</text>
+<rect x="374" y="81" width="136" height="26" rx="6" class="b"/>
+<text x="442.0" y="97.5" text-anchor="middle" font-size="10">code-puppy</text>
+<rect x="374" y="112" width="136" height="26" rx="6" class="b"/>
+<text x="442.0" y="128.5" text-anchor="middle" font-size="10">pydantic-ai</text>
+<rect x="374" y="143" width="136" height="26" rx="6" class="b"/>
+<text x="442.0" y="159.5" text-anchor="middle" font-size="10">generic</text>
+<path d="M336 86H362" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".8" marker-end="url(#arw-barony)"/>
+<rect x="550" y="30" width="200" height="52" rx="6" class="b hl"/>
+<text x="650.0" y="47.5" text-anchor="middle" font-size="10">Guard hook</text>
+<text x="650.0" y="59.5" text-anchor="middle" font-size="9" opacity=".85">blocks a denied action before</text>
+<text x="650.0" y="71.5" text-anchor="middle" font-size="9" opacity=".85">the tool runs, where there's a hook</text>
+<path d="M522 56H550" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".8" marker-end="url(#arw-barony)"/>
+<rect x="550" y="102" width="200" height="40" rx="6" class="b"/>
+<text x="650.0" y="119.5" text-anchor="middle" font-size="10">Every rule labelled</text>
+<text x="650.0" y="131.5" text-anchor="middle" font-size="9" opacity=".85">6 of 10 enforced, 4 only instructed</text>
+<rect x="10" y="204" width="360" height="44" rx="6" class="b"/>
+<text x="190.0" y="223.5" text-anchor="middle" font-size="10">Collab repo in git</text>
+<text x="190.0" y="235.5" text-anchor="middle" font-size="9" opacity=".85">handoffs, findings, decisions, signed review verdicts</text>
+<rect x="390" y="204" width="360" height="44" rx="6" class="b"/>
+<text x="570.0" y="223.5" text-anchor="middle" font-size="10">baron health, baron memeval</text>
+<text x="570.0" y="235.5" text-anchor="middle" font-size="9" opacity=".85">mutation kill rate, reviewer escapes, claim drift, stalls</text>
+<path d="M442 178V190H190V204" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".8" marker-end="url(#arw-barony)"/>
+<text x="316" y="186" text-anchor="middle" font-size="8" opacity=".8">what agents did</text>
+<path d="M370 226H390" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".8" marker-end="url(#arw-barony)"/>
+<text x="10" y="266" font-size="10" opacity=".85">No server and no database: markdown, git and two Python dependencies.</text>
+</g>
+</svg>
+<span class="arch-zoom" aria-hidden="true">Click to enlarge</span></button>
+                  <figcaption>Declare each agent once; the guard enforces what the runtime allows, and everything else is labelled as instruction.</figcaption>
+                </figure>
                 <h4>Details</h4>
                 <ul>
                   <li>Every rule is labelled as enforced or only instructed. Six of ten are enforced today, and CI fails an adapter that claims more than it does.</li>
@@ -305,33 +437,82 @@
                   <img src="assets/tiq-dashboard.jpg" alt="TrellisIQ dashboard: plants that need attention, each with a health score and a priority" width="960" height="600" loading="lazy" decoding="async">
                   <figcaption>Dashboard, demo garden.</figcaption>
                 </figure>
-                <h4>The agent team I put together</h4>
-                <ol class="flow">
-                  <li><b>Analyst agent</b>tests the app, reads feedback, files issues</li>
-                  <li><b>Claim</b>a dev agent takes the issue by label</li>
-                  <li><b>Build</b>each dev agent in its own clone with its own database</li>
-                  <li><b>Pull request</b>CI plus analyst comments</li>
-                  <li class="human"><b>Me</b>nothing merges without my nod</li>
-                  <li><b>Close the loop</b>dev log, decision record, analyst verifies</li>
-                </ol>
-                <p class="flow-note">Rules lived in a shared coordination file: how to claim work, which files only one agent may touch at a time, and how to hand off.</p>
-                <h4>User feedback to fix</h4>
-                <ol class="flow">
-                  <li><b>Feedback</b>from a user, in the app</li>
-                  <li><b>Quick triage</b>a fast model sets severity, with a five-second limit</li>
-                  <li><b>Deeper pass</b>a larger model sets priority and drafts the issue</li>
-                  <li><b>Judge</b>a third model grades that draft</li>
-                  <li class="human"><b>File</b>I click to open the GitHub issue</li>
-                  <li><b>Fix</b>a dev agent opens a PR; a webhook tells the user it's fixed</li>
-                </ol>
-                <h4>"Similar plants" with embeddings</h4>
-                <ol class="flow">
-                  <li><b>Photo</b>of a plant</li>
-                  <li><b>Diagnosis</b>a vision model describes species, stage, health, issues</li>
-                  <li><b>Embed</b>the description, not the pixels</li>
-                  <li><b>pgvector</b>nearest neighbours in Postgres</li>
-                  <li><b>Rerank</b>nudges results toward the same plant type</li>
-                </ol>
+                <h4>Architecture</h4>
+                <figure class="arch">
+                  <button class="arch-open" type="button" aria-label="Open the TrellisIQ architecture diagram full size">
+<svg viewBox="0 0 760 304" role="img" aria-labelledby="trellis-t trellis-d">
+<title id="trellis-t">TrellisIQ architecture: product and the agent team</title>
+<desc id="trellis-d">In the product, a gardener's photo goes to the Next.js app, a vision model returns a diagnosis with confidence, plain code turns it into a 0 to 100 health score, and the diagnosis text is embedded for similar-plant search in pgvector. User feedback goes through a fast triage model, a larger model that drafts the issue, and a judge model, then Vikram files it. In the agent team, an analyst agent tests and files issues, developer agents claim them by label and work in their own clone and database, pull requests run CI and review, nothing merges without Vikram's nod, and it deploys to Cloud Run.</desc>
+<defs><marker id="arw-trellis" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="currentColor"/></marker></defs>
+<g font-family="Inter, system-ui, sans-serif" fill="currentColor">
+<text x="10" y="14" font-size="10" letter-spacing="1.5" opacity=".7" text-anchor="start">IN THE PRODUCT</text>
+<rect x="10" y="36" width="112" height="36" rx="6" class="b"/>
+<text x="66.0" y="51.5" text-anchor="middle" font-size="10">Gardener</text>
+<text x="66.0" y="63.5" text-anchor="middle" font-size="9" opacity=".85">photos, chat, feedback</text>
+<rect x="136" y="36" width="142" height="36" rx="6" class="b"/>
+<text x="207.0" y="51.5" text-anchor="middle" font-size="10">Next.js app</text>
+<text x="207.0" y="63.5" text-anchor="middle" font-size="9" opacity=".85">Postgres with pgvector</text>
+<rect x="292" y="36" width="142" height="36" rx="6" class="b hl"/>
+<text x="363.0" y="51.5" text-anchor="middle" font-size="10">Vision model</text>
+<text x="363.0" y="63.5" text-anchor="middle" font-size="9" opacity=".85">diagnosis with confidence</text>
+<rect x="448" y="36" width="142" height="36" rx="6" class="b"/>
+<text x="519.0" y="51.5" text-anchor="middle" font-size="10">Health score</text>
+<text x="519.0" y="63.5" text-anchor="middle" font-size="9" opacity=".85">plain code, 0 to 100</text>
+<rect x="604" y="36" width="146" height="36" rx="6" class="b"/>
+<text x="677.0" y="51.5" text-anchor="middle" font-size="10">Similar plants</text>
+<text x="677.0" y="63.5" text-anchor="middle" font-size="9" opacity=".85">embedded description</text>
+<path d="M122 54H136" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".8" marker-end="url(#arw-trellis)"/>
+<path d="M278 54H292" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".8" marker-end="url(#arw-trellis)"/>
+<path d="M434 54H448" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".8" marker-end="url(#arw-trellis)"/>
+<path d="M363 36V26H677V36" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".8" marker-end="url(#arw-trellis)"/>
+<text x="520" y="23" text-anchor="middle" font-size="8" opacity=".8">description, not pixels</text>
+<rect x="136" y="108" width="142" height="36" rx="6" class="b"/>
+<text x="207.0" y="123.5" text-anchor="middle" font-size="10">Quick triage</text>
+<text x="207.0" y="135.5" text-anchor="middle" font-size="9" opacity=".85">fast model, 5 s limit</text>
+<rect x="292" y="108" width="142" height="36" rx="6" class="b"/>
+<text x="363.0" y="123.5" text-anchor="middle" font-size="10">Deeper pass</text>
+<text x="363.0" y="135.5" text-anchor="middle" font-size="9" opacity=".85">drafts the issue</text>
+<rect x="448" y="108" width="142" height="36" rx="6" class="b"/>
+<text x="519.0" y="123.5" text-anchor="middle" font-size="10">Judge</text>
+<text x="519.0" y="135.5" text-anchor="middle" font-size="9" opacity=".85">grades the draft</text>
+<rect x="604" y="108" width="146" height="36" rx="6" class="b human"/>
+<text x="677.0" y="123.5" text-anchor="middle" font-size="10">File the issue</text>
+<text x="677.0" y="135.5" text-anchor="middle" font-size="9" opacity=".85">my click, on GitHub</text>
+<path d="M207 72V108" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".8" marker-end="url(#arw-trellis)"/>
+<text x="226" y="93" text-anchor="middle" font-size="8" opacity=".8">feedback</text>
+<path d="M278 126H292" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".8" marker-end="url(#arw-trellis)"/>
+<path d="M434 126H448" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".8" marker-end="url(#arw-trellis)"/>
+<path d="M590 126H604" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".8" marker-end="url(#arw-trellis)"/>
+<rect x="10" y="176" width="740" height="98" rx="10" class="loop"/>
+<rect x="22" y="194" width="132" height="36" rx="6" class="b"/>
+<text x="88.0" y="209.5" text-anchor="middle" font-size="10">Analyst agent</text>
+<text x="88.0" y="221.5" text-anchor="middle" font-size="9" opacity=".85">tests, files issues</text>
+<rect x="170" y="194" width="160" height="36" rx="6" class="b"/>
+<text x="250.0" y="209.5" text-anchor="middle" font-size="10">Developer agents</text>
+<text x="250.0" y="221.5" text-anchor="middle" font-size="9" opacity=".85">own clone and database</text>
+<rect x="346" y="194" width="120" height="36" rx="6" class="b"/>
+<text x="406.0" y="209.5" text-anchor="middle" font-size="10">Pull request</text>
+<text x="406.0" y="221.5" text-anchor="middle" font-size="9" opacity=".85">CI and review</text>
+<rect x="482" y="194" width="110" height="36" rx="6" class="b human"/>
+<text x="537.0" y="209.5" text-anchor="middle" font-size="10">Me</text>
+<text x="537.0" y="221.5" text-anchor="middle" font-size="9" opacity=".85">nod to merge</text>
+<rect x="608" y="194" width="130" height="36" rx="6" class="b"/>
+<text x="673.0" y="209.5" text-anchor="middle" font-size="10">Deploy</text>
+<text x="673.0" y="221.5" text-anchor="middle" font-size="9" opacity=".85">Cloud Run</text>
+<path d="M154 212H170" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".8" marker-end="url(#arw-trellis)"/>
+<path d="M330 212H346" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".8" marker-end="url(#arw-trellis)"/>
+<path d="M466 212H482" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".8" marker-end="url(#arw-trellis)"/>
+<path d="M592 212H608" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".8" marker-end="url(#arw-trellis)"/>
+<path d="M677 144V164H250V194" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".8" marker-end="url(#arw-trellis)"/>
+<text x="462" y="160" text-anchor="middle" font-size="8" opacity=".8">claimed by label</text>
+<text x="22" y="262" font-size="10" letter-spacing="1.5" opacity=".7" text-anchor="start">THE AGENT TEAM THAT BUILT AND FIXED IT</text>
+<text x="10" y="294" font-size="10" opacity=".85">Dashed boxes are me. When a fix merges, a signed webhook marks the user's feedback as fixed.</text>
+</g>
+</svg>
+<span class="arch-zoom" aria-hidden="true">Click to enlarge</span></button>
+                  <figcaption>The product on top, the agent team that built it underneath, and user feedback connecting the two.</figcaption>
+                </figure>
+                <p class="flow-note">Each developer agent had its own clone and database. Rules lived in a shared coordination file: how to claim work, which files only one agent may touch at a time, and how to hand off.</p>
                 <h4>Details</h4>
                 <ul>
                   <li>The analyst agent built a small eval for "similar plants": precision in the top five went from 0.30 to 0.36 after one fix, and the eval itself turned up a real bug. It's one garden of about 56 plants, so it's a feedback loop, not a benchmark.</li>
