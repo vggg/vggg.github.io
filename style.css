@@ -189,3 +189,21 @@ figcaption { font-size: .85rem; color: var(--muted); margin-top: .5rem; }
 
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 @media print { .top, .skip, .video { display: none; } body { background: #fff; color: #000; } .section-alt { background: none; } }
+
+/* Architecture diagram (SVG) with lightbox */
+.arch { margin: .4rem 0 0; color: var(--text); }
+.arch-open { display: block; width: 100%; padding: .7rem; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--text); cursor: zoom-in; text-align: left; font: inherit; }
+.arch-open:hover { border-color: var(--accent); }
+.arch svg, .lightbox svg { display: block; width: 100%; height: auto; }
+.arch .b, .lightbox .b { fill: var(--surface); stroke: var(--line-strong); }
+.arch .b.hl, .lightbox .b.hl { stroke: var(--accent); stroke-width: 1.6; }
+.arch .loop, .lightbox .loop { fill: none; stroke: var(--line-strong); stroke-dasharray: 4 4; }
+.arch-zoom { display: block; margin-top: .5rem; font-size: .8rem; font-weight: 600; color: var(--accent); }
+.lightbox { width: min(1100px, calc(100vw - 2rem)); max-width: none; max-height: calc(100vh - 2rem); padding: 1rem; border: 1px solid var(--line-strong); border-radius: 12px; background: var(--bg); color: var(--text); overflow: auto; }
+.lightbox::backdrop { background: rgba(10, 12, 14, .7); }
+.lightbox-body { overflow-x: auto; }
+.lightbox-body svg { min-width: 760px; }
+.lightbox-close { display: block; margin: 0 0 .6rem auto; padding: .4rem .9rem; border: 1px solid var(--line-strong); border-radius: 999px; background: var(--surface); color: var(--text); font: 600 .85rem var(--sans); cursor: pointer; }
+.top5 { margin: 0; padding-left: 1.3rem; color: var(--text-2); }
+.top5 li { margin: 0 0 .55rem; line-height: 1.55; }
+.top5 b { color: var(--text); }

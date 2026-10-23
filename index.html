@@ -27,7 +27,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap">
-<link rel="stylesheet" href="style.css?v=11">
+<link rel="stylesheet" href="style.css?v=14">
 </head>
 <body>
 
@@ -82,14 +82,60 @@
                   <li class="human"><b>Me</b>one ticket per round, then I pick the next</li>
                 </ol>
                 <p class="flow-note">Dashed boxes are me. Design decisions are written up and ratified by me before any agent touches them.</p>
-                <h4>What the product does with a deck</h4>
-                <ol class="flow">
-                  <li><b>Structured source</b>a validated deck spec with recorded design decisions</li>
-                  <li><b>Compile</b>deterministic, repairs first</li>
-                  <li><b>Model, if needed</b>only on a trigger, with spend reserved up front</li>
-                  <li class="gate"><b>Render check</b>every slide is checked in a real browser</li>
-                  <li><b>Web slides</b>PPTX and PDF are on the list, not built yet</li>
-                </ol>
+                <h4>How the product works</h4>
+                <figure class="arch">
+                  <button class="arch-open" type="button" aria-label="Open the enCodr architecture diagram full size">
+          <svg viewBox="0 0 760 316" role="img" aria-labelledby="encodr-arch-t encodr-arch-d">
+            <title id="encodr-arch-t">enCodr architecture and agent loop</title>
+            <desc id="encodr-arch-d">CLI and browser editor use one Fastify API over a PostgreSQL store; a compile-job worker runs a hosted agent loop: compile baseline, deterministic repair, escalate to a model only on a trigger, application checks every tool call, compiler tools build and measure a candidate, controller accepts or rejects; the selected candidate is projected, fully rendered in Chromium and committed under a lease. Providers module meters spend; renderers deliver web slides and share links; PPTX and PDF are planned.</desc>
+            <defs><marker id="arw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="currentColor"/></marker></defs>
+            <g font-family="Inter, system-ui, sans-serif" fill="currentColor">
+              <text x="10" y="14" font-size="10" letter-spacing="1.5" opacity=".7">ONE AUTHENTICATED API, HUMANS AND AGENTS ON THE SAME PATH</text>
+              <rect x="10" y="24" width="80" height="34" rx="6" class="b"/><text x="50.0" y="45.0" text-anchor="middle" font-size="10">Thin CLI</text>
+              <rect x="100" y="24" width="100" height="34" rx="6" class="b"/><text x="150.0" y="45.0" text-anchor="middle" font-size="10">Browser editor</text>
+              <rect x="250" y="24" width="130" height="34" rx="6" class="b"/><text x="315.0" y="38" text-anchor="middle" font-size="10">Fastify API</text><text x="315.0" y="50" text-anchor="middle" font-size="9" opacity=".85">validate DSL, persist</text>
+              <rect x="420" y="24" width="150" height="34" rx="6" class="b"/><text x="495.0" y="38" text-anchor="middle" font-size="10">PostgreSQL store</text><text x="495.0" y="50" text-anchor="middle" font-size="9" opacity=".85">revisions, jobs, builds</text>
+              <rect x="610" y="24" width="140" height="34" rx="6" class="b"/><text x="680.0" y="38" text-anchor="middle" font-size="10">Compile-job worker</text><text x="680.0" y="50" text-anchor="middle" font-size="9" opacity=".85">claims a job, leases</text>
+              <path d="M50 58V68H228V41H250" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".8" marker-end="url(#arw)"/><path d="M200 41H250" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".8" marker-end="url(#arw)"/><path d="M380 41H420" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".8" marker-end="url(#arw)"/><path d="M570 41H610" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".8" marker-end="url(#arw)"/><path d="M680 58V84" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".8" marker-end="url(#arw)"/>
+              <rect x="10" y="84" width="740" height="150" rx="10" class="loop"/>
+              <text x="22" y="100" font-size="10" letter-spacing="1.5" opacity=".7">HOSTED AGENT LOOP: THE MODEL PROPOSES, THE APPLICATION DECIDES</text>
+              <rect x="22" y="110" width="95" height="34" rx="6" class="b"/><text x="69.5" y="124" text-anchor="middle" font-size="10">Compile baseline</text><text x="69.5" y="136" text-anchor="middle" font-size="9" opacity=".85">collect diagnostics</text>
+              <rect x="127" y="110" width="95" height="34" rx="6" class="b"/><text x="174.5" y="124" text-anchor="middle" font-size="10">Deterministic</text><text x="174.5" y="136" text-anchor="middle" font-size="9" opacity=".85">plan, measure, repair</text>
+              <rect x="232" y="110" width="95" height="34" rx="6" class="b"/><text x="279.5" y="124" text-anchor="middle" font-size="10">Escalation</text><text x="279.5" y="136" text-anchor="middle" font-size="9" opacity=".85">trigger and budget?</text>
+              <rect x="337" y="110" width="95" height="34" rx="6" class="b hl"/><text x="384.5" y="124" text-anchor="middle" font-size="10">Model proposes</text><text x="384.5" y="136" text-anchor="middle" font-size="9" opacity=".85">next action</text>
+              <rect x="442" y="110" width="95" height="34" rx="6" class="b"/><text x="489.5" y="124" text-anchor="middle" font-size="10">Application checks</text><text x="489.5" y="136" text-anchor="middle" font-size="9" opacity=".85">checks the tool call</text>
+              <rect x="547" y="110" width="95" height="34" rx="6" class="b"/><text x="594.5" y="124" text-anchor="middle" font-size="10">Compiler tools</text><text x="594.5" y="136" text-anchor="middle" font-size="9" opacity=".85">build and measure</text>
+              <rect x="652" y="110" width="95" height="34" rx="6" class="b"/><text x="699.5" y="124" text-anchor="middle" font-size="10">Controller</text><text x="699.5" y="136" text-anchor="middle" font-size="9" opacity=".85">accept or reject</text>
+              <path d="M117 127H127" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".8" marker-end="url(#arw)"/>
+              <path d="M222 127H232" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".8" marker-end="url(#arw)"/>
+              <path d="M327 127H337" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".8" marker-end="url(#arw)"/>
+              <path d="M432 127H442" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".8" marker-end="url(#arw)"/>
+              <path d="M537 127H547" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".8" marker-end="url(#arw)"/>
+              <path d="M642 127H652" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".8" marker-end="url(#arw)"/>
+              <text x="437" y="153" text-anchor="middle" font-size="8" opacity=".8">yes</text>
+              <path d="M699 110V104H489V110" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".8" marker-end="url(#arw)"/>
+              <text x="594" y="101" text-anchor="middle" font-size="8" opacity=".8">feedback, budget remains</text>
+              <rect x="232" y="176" width="130" height="34" rx="6" class="b"/><text x="297.0" y="190" text-anchor="middle" font-size="10">Project source</text><text x="297.0" y="202" text-anchor="middle" font-size="9" opacity=".85">verify re-lowering</text>
+              <rect x="392" y="176" width="150" height="34" rx="6" class="b"/><text x="467.0" y="190" text-anchor="middle" font-size="10">Full render verification</text><text x="467.0" y="202" text-anchor="middle" font-size="9" opacity=".85">Chromium, every slide</text>
+              <rect x="572" y="176" width="120" height="34" rx="6" class="b"/><text x="632.0" y="190" text-anchor="middle" font-size="10">Guarded commit</text><text x="632.0" y="202" text-anchor="middle" font-size="9" opacity=".85">checked build, lease held</text>
+              <rect x="22" y="176" width="190" height="34" rx="6" class="b"/><text x="117.0" y="190" text-anchor="middle" font-size="10">Exhausted or stopped</text><text x="117.0" y="202" text-anchor="middle" font-size="9" opacity=".85">best permitted candidate, recovery draft</text>
+              <path d="M384 144V176" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".8" marker-end="url(#arw)"/>
+              <text x="372" y="162" text-anchor="end" font-size="8" opacity=".8">no</text>
+              <path d="M699 144V160H300V176" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".8" marker-end="url(#arw)"/>
+              <text x="500" y="157" text-anchor="middle" font-size="8" opacity=".8">selected candidate</text>
+              <path d="M362 193H392" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".8" marker-end="url(#arw)"/><path d="M542 193H572" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".8" marker-end="url(#arw)"/>
+              <path d="M174 144V176" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".8" stroke-dasharray="3 3" marker-end="url(#arw)"/>
+              
+              <rect x="10" y="250" width="360" height="34" rx="6" class="b"/><text x="190.0" y="264" text-anchor="middle" font-size="10">Providers module</text><text x="190.0" y="276" text-anchor="middle" font-size="9" opacity=".85">OpenAI, Anthropic, OpenRouter; spend reserved before dispatch</text>
+              <rect x="390" y="250" width="360" height="34" rx="6" class="b"/><text x="570.0" y="264" text-anchor="middle" font-size="10">Renderers and delivery</text><text x="570.0" y="276" text-anchor="middle" font-size="9" opacity=".85">web presenter, share links; PPTX and PDF planned</text>
+              <path d="M632 234V250" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".8" marker-end="url(#arw)"/>
+              <text x="10" y="306" font-size="10" opacity=".85">A model completion cannot skip a check or advance a revision head. Direct saves, undo and restore never call a model.</text>
+            </g>
+          </svg>
+
+                  <span class="arch-zoom" aria-hidden="true">Click to enlarge</span></button>
+                  <figcaption>One API for people and agents, and an agent loop where the model only proposes.</figcaption>
+                </figure>
                 <h4>Small things I like about it</h4>
                 <ul>
                   <li>The model never picks colours or pixel positions. Layout belongs to code.</li>
@@ -238,6 +284,14 @@
             <details class="more">
               <summary>How it works</summary>
               <div class="more-body">
+                <h4>What it does</h4>
+                <ol class="top5">
+                  <li><b>Photo to health score.</b> A vision model identifies the plant, scores it 0 to 100, names the issue and the next thing to do.</li>
+                  <li><b>Priority alerts.</b> The plants in the worst shape come first, by email or text, plus a weekly plan built from the garden and the weather.</li>
+                  <li><b>Garden map and walk.</b> Zones drawn on a top-down photo. Or film a walk through the garden: it pulls a frame every couple of seconds, drops near-duplicates, and an agent matches each plant it sees to your garden.</li>
+                  <li><b>Sun and shade.</b> A sun profile for each garden from solar data, with a shadow overlay on the map.</li>
+                  <li><b>Irrigation.</b> Watering lines and schedules, and which dripper feeds which plant.</li>
+                </ol>
                 <figure class="shot">
                   <img src="assets/tiq-dashboard.jpg" alt="TrellisIQ dashboard: plants that need attention, each with a health score and a priority" width="960" height="600" loading="lazy" decoding="async">
                   <figcaption>Dashboard, demo garden.</figcaption>
@@ -316,6 +370,11 @@
 
 </main>
 
+<dialog class="lightbox" aria-label="Diagram, full size">
+  <button class="lightbox-close" type="button" aria-label="Close">Close</button>
+  <div class="lightbox-body"></div>
+</dialog>
+
 <footer class="foot">
   <div class="wrap">
     <p>No analytics, no cookies.</p>
@@ -333,6 +392,26 @@ document.querySelectorAll('.video-facade').forEach(function (b) {
     b.replaceWith(f);
   });
 });
+
+(function () {
+  var dlg = document.querySelector('.lightbox');
+  if (!dlg || !dlg.showModal) return;
+  var body = dlg.querySelector('.lightbox-body');
+  document.querySelectorAll('.arch-open').forEach(function (b) {
+    b.addEventListener('click', function () {
+      body.innerHTML = '';
+      var svg = b.querySelector('svg').cloneNode(true);
+      svg.querySelectorAll('[id]').forEach(function (n) { n.id = n.id + '-lb'; });
+      svg.querySelectorAll('[marker-end]').forEach(function (n) { n.setAttribute('marker-end', n.getAttribute('marker-end').replace(')', '-lb)')); });
+      svg.removeAttribute('aria-labelledby');
+      svg.setAttribute('aria-label', b.getAttribute('aria-label').replace('Open the ', '').replace(' full size', ''));
+      body.appendChild(svg);
+      dlg.showModal();
+    });
+  });
+  dlg.querySelector('.lightbox-close').addEventListener('click', function () { dlg.close(); });
+  dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
+})();
 </script>
 
 </body>
