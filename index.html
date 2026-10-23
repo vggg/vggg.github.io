@@ -27,7 +27,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap">
-<link rel="stylesheet" href="style.css?v=9">
+<link rel="stylesheet" href="style.css?v=11">
 </head>
 <body>
 
@@ -62,13 +62,84 @@
       <ol class="timeline">
 
         <li class="entry">
+          <p class="when">Ongoing</p>
+          <div class="body">
+            <h3>enCodr</h3>
+            <p>An idea I'm prototyping: keep a presentation's argument (the claims, the evidence, the ask) as structured source, and generate the slides for each audience from it, instead of rebuilding a deck by hand every time.</p>
+            <p class="learned-label">What I learned</p>
+            <p>The model should propose and the application should decide. Plain code compiles the slides and repairs what it can on its own; a model only gets called when a specific check trips, and the budget for that call is set aside before it goes out. It's also my most structured agent build so far: agents write the code in sandboxes, and I approve every ticket before the next one starts.</p>
+            <details class="more">
+              <summary>How it's built</summary>
+              <div class="more-body">
+                <h4>The agent pipeline that writes the code</h4>
+                <ol class="flow">
+                  <li class="human"><b>Ticket</b>I write it and label it ready</li>
+                  <li><b>Planner</b>picks it up and scopes the work</li>
+                  <li><b>Implementer</b>writes tests first, in a Docker sandbox</li>
+                  <li><b>Reviewer</b>has to open its verdict with PASS</li>
+                  <li class="gate"><b>CI gate</b>real Postgres and Chromium; fails closed if either is missing</li>
+                  <li><b>Merger</b>merges only on a green check</li>
+                  <li class="human"><b>Me</b>one ticket per round, then I pick the next</li>
+                </ol>
+                <p class="flow-note">Dashed boxes are me. Design decisions are written up and ratified by me before any agent touches them.</p>
+                <h4>What the product does with a deck</h4>
+                <ol class="flow">
+                  <li><b>Structured source</b>a validated deck spec with recorded design decisions</li>
+                  <li><b>Compile</b>deterministic, repairs first</li>
+                  <li><b>Model, if needed</b>only on a trigger, with spend reserved up front</li>
+                  <li class="gate"><b>Render check</b>every slide is checked in a real browser</li>
+                  <li><b>Web slides</b>PPTX and PDF are on the list, not built yet</li>
+                </ol>
+                <h4>Small things I like about it</h4>
+                <ul>
+                  <li>The model never picks colours or pixel positions. Layout belongs to code.</li>
+                  <li>Shortening a deck has to keep the caveats, not just the headlines.</li>
+                  <li>Text is measured against the actual font before it's placed, so nothing overflows quietly.</li>
+                  <li>Module boundaries are checked on every build, so the codebase can't slowly turn into a ball of mud.</li>
+                </ul>
+                <p class="meta">TypeScript, Fastify, Postgres, Playwright, zod. Private prototype.</p>
+              </div>
+            </details>
+          </div>
+        </li>
+
+        <li class="entry">
           <p class="when"><time datetime="2026-10">Oct 2026</time></p>
           <div class="body">
             <h3>A claims checker for documents</h3>
             <p>Checks whether the claims in a document hold up against a set of sourced facts. Every verdict has to point at the fact it relied on.</p>
             <p class="learned-label">What I learned</p>
             <p>Let plain code do the judging. The language model only works out what a sentence is about; whether it's supported is decided by ordinary checks I can read. To test it, I set up a separate "adversary" that plants bad claims without being able to see the checker's code. Its first full run got two past me, which was the point. It now catches all 37 in its current test set, which is still small.</p>
-            <p class="meta">Python, Postgres, MCP. Private, early.</p>
+            <details class="more">
+              <summary>How it works</summary>
+              <div class="more-body">
+                <h4>Checking a document</h4>
+                <ol class="flow">
+                  <li><b>Document</b>PDF or Word</li>
+                  <li><b>Two extractors</b>independent, per format, so one parser's mistakes show up</li>
+                  <li><b>Claim mapping</b>the model matches each sentence to a subject, nothing more</li>
+                  <li><b>Ledger</b>sourced facts in Postgres, row-level security</li>
+                  <li class="gate"><b>Checks</b>plain code: figures, precision, how strongly a source supports it</li>
+                  <li><b>Verdict</b>pass or fail, every reason cites a ledger row</li>
+                </ol>
+                <h4>Testing it with an adversary</h4>
+                <ol class="flow">
+                  <li><b>Clean baseline</b>a document that should pass</li>
+                  <li><b>Adversary</b>separate repo, sandboxed so it can't read the checker</li>
+                  <li><b>Plants defects</b>changed figures, inflated claims, unsourced lines</li>
+                  <li class="gate"><b>Checker runs</b>caught or missed, per defect</li>
+                  <li><b>Harmless edits</b>should not be flagged: 0 of 52 were</li>
+                </ol>
+                <h4>Details</h4>
+                <ul>
+                  <li>The very first measurement found a bug in my own mapper, which is the best argument I know for measuring early.</li>
+                  <li>Document text is treated as data, never as instructions to the model.</li>
+                  <li>Traces carry references to ledger rows, never the claim text itself.</li>
+                  <li>Database tests run as the real roles, so the access rules are tested, not assumed.</li>
+                </ul>
+                <p class="meta">Python, Postgres, MCP, A2A, pydantic-ai, OpenTelemetry. Private, early.</p>
+              </div>
+            </details>
           </div>
         </li>
 
@@ -86,7 +157,42 @@
               </button>
               <figcaption>14 seconds on an anonymized clip: shuttle trail, player movement, running score. Plays from YouTube.</figcaption>
             </figure>
-            <p class="meta">Python, OpenCV, TrackNet, YOLO. Invite-only beta.</p>
+            <details class="more">
+              <summary>How it works</summary>
+              <div class="more-body">
+                <h4>The vision pipeline</h4>
+                <ol class="flow">
+                  <li><b>Phone video</b>one camera</li>
+                  <li><b>Court calibration</b>auto-detected, with tap-the-corners as a fallback</li>
+                  <li><b>Shuttle</b>tracked with TrackNet</li>
+                  <li><b>Players</b>detected with YOLO, near and far side</li>
+                  <li><b>Rallies</b>found by a vision-language model reading the players</li>
+                  <li><b>Report</b>tempo, a coaching cue, and what it couldn't call</li>
+                </ol>
+                <figure class="shot">
+                  <img src="assets/shuttler-report.jpg" alt="Shuttler match report on a synthetic clip: coaching cue, rallies called and held, tempo, and a list of what one camera can't tell you" width="900" height="942" loading="lazy" decoding="async">
+                  <figcaption>The report, on a synthetic test clip. "What we can't tell you" is part of the report, not fine print.</figcaption>
+                </figure>
+                <h4>How the agents built it</h4>
+                <ol class="flow">
+                  <li><b>Issue</b>labelled for an agent</li>
+                  <li><b>Developer agents</b>each in its own worktree</li>
+                  <li><b>Pull request</b>approval is stripped if the code changes after review</li>
+                  <li><b>Reviewer agent</b>signs a verdict against the exact commit</li>
+                  <li class="gate"><b>Merger agent</b>the only one allowed to merge</li>
+                  <li><b>CI, then deploy</b>to Cloud Run</li>
+                </ol>
+                <p class="flow-note">Decisions and handoffs live in a separate coordination repo run with Barony.</p>
+                <h4>Details</h4>
+                <ul>
+                  <li>Every phase has a number it has to hit, written into the eval harness. Shuttle detection passes (0.992 on one clip, against 0.85). Rally detection doesn't yet, and the README says so.</li>
+                  <li>Eight small experiments, one of them repeated at a second venue, to find out what one camera can honestly call. Filming at 120 fps didn't change the answer.</li>
+                  <li>The blur fails closed: if it isn't sure, it blurs, and a separate check confirms the blur actually landed.</li>
+                  <li>178 merged pull requests and 1,184 tests.</li>
+                </ul>
+                <p class="meta">Python, OpenCV, TrackNet, YOLO, Claude, Cloud Run. Invite-only beta.</p>
+              </div>
+            </details>
           </div>
         </li>
 
@@ -97,6 +203,27 @@
             <p>An open-source tool for running a team of AI coding agents on one repo: who's allowed to do what, and a record of who did what.</p>
             <p class="learned-label">What I learned</p>
             <p>Writing rules down for agents is not the same as agents following them. When I audited one of my own agent teams, only about half of the written process was actually happening. So Barony blocks what it can before an agent acts, and it's upfront about which rules are only suggestions.</p>
+            <details class="more">
+              <summary>How it works</summary>
+              <div class="more-body">
+                <ol class="flow">
+                  <li><b>Declare</b>each agent once: persona and manifest files</li>
+                  <li><b>baron CLI</b>validates, wires up, reports status</li>
+                  <li><b>Adapters</b>Claude Code, code-puppy, pydantic-ai, or generic</li>
+                  <li class="gate"><b>Guard</b>blocks a denied action before the tool runs, where the runtime allows it</li>
+                  <li><b>Git record</b>handoffs, findings, decisions, signed review verdicts</li>
+                  <li><b>Health</b>numbers on how well the team is actually behaving</li>
+                </ol>
+                <h4>Details</h4>
+                <ul>
+                  <li>Every rule is labelled as enforced or only instructed. Six of ten are enforced today, and CI fails an adapter that claims more than it does.</li>
+                  <li><code>baron health</code> reports things like reviews that didn't name the commit that got merged, and agents that stalled.</li>
+                  <li>No server and no database: markdown and git, with two Python dependencies.</li>
+                  <li>The README has a "skip it if" section. It isn't a sandbox and it isn't for everyone.</li>
+                </ul>
+                <p class="meta"><a href="https://github.com/vggg/barony-demo">Demo project</a>, including a real guard refusal. <a href="https://vggg.github.io/barony/v1/">Fleet dashboard</a> (August snapshot).</p>
+              </div>
+            </details>
             <p class="meta"><code>pip install barony</code> · <a href="https://github.com/vggg/barony">GitHub</a> · <a href="https://vggg.github.io/barony/">Docs</a> · <a href="https://pypi.org/project/barony/">PyPI</a></p>
           </div>
         </li>
@@ -108,6 +235,50 @@
             <p>A garden app. Photograph a plant and it identifies it, gives it a health score and suggests care, then keeps track of it over time.</p>
             <p class="learned-label">What I learned</p>
             <p>This was my first go at having a small team of agents (two developers, an analyst and a designer) build a whole product while I acted as product owner. They merged 204 pull requests in about five weeks. Speed was never the problem. Knowing what was actually finished was harder, and that's what got me interested in how you keep an agent team honest.</p>
+            <details class="more">
+              <summary>How it works</summary>
+              <div class="more-body">
+                <figure class="shot">
+                  <img src="assets/tiq-dashboard.jpg" alt="TrellisIQ dashboard: plants that need attention, each with a health score and a priority" width="960" height="600" loading="lazy" decoding="async">
+                  <figcaption>Dashboard, demo garden.</figcaption>
+                </figure>
+                <h4>The agent team I put together</h4>
+                <ol class="flow">
+                  <li><b>Analyst agent</b>tests the app, reads feedback, files issues</li>
+                  <li><b>Claim</b>a dev agent takes the issue by label</li>
+                  <li><b>Build</b>each dev agent in its own clone with its own database</li>
+                  <li><b>Pull request</b>CI plus analyst comments</li>
+                  <li class="human"><b>Me</b>nothing merges without my nod</li>
+                  <li><b>Close the loop</b>dev log, decision record, analyst verifies</li>
+                </ol>
+                <p class="flow-note">Rules lived in a shared coordination file: how to claim work, which files only one agent may touch at a time, and how to hand off.</p>
+                <h4>User feedback to fix</h4>
+                <ol class="flow">
+                  <li><b>Feedback</b>from a user, in the app</li>
+                  <li><b>Quick triage</b>a fast model sets severity, with a five-second limit</li>
+                  <li><b>Deeper pass</b>a larger model sets priority and drafts the issue</li>
+                  <li><b>Judge</b>a third model grades that draft</li>
+                  <li class="human"><b>File</b>I click to open the GitHub issue</li>
+                  <li><b>Fix</b>a dev agent opens a PR; a webhook tells the user it's fixed</li>
+                </ol>
+                <h4>"Similar plants" with embeddings</h4>
+                <ol class="flow">
+                  <li><b>Photo</b>of a plant</li>
+                  <li><b>Diagnosis</b>a vision model describes species, stage, health, issues</li>
+                  <li><b>Embed</b>the description, not the pixels</li>
+                  <li><b>pgvector</b>nearest neighbours in Postgres</li>
+                  <li><b>Rerank</b>nudges results toward the same plant type</li>
+                </ol>
+                <h4>Details</h4>
+                <ul>
+                  <li>The analyst agent built a small eval for "similar plants": precision in the top five went from 0.30 to 0.36 after one fix, and the eval itself turned up a real bug. It's one garden of about 56 plants, so it's a feedback loop, not a benchmark.</li>
+                  <li>The health score is half model, half arithmetic: the model lists what's wrong and how sure it is, and plain code turns that into a 0 to 100 score.</li>
+                  <li>The garden assistant chats with a fresh snapshot of your garden (plants, health, weather, care log), and anything it suggests doing goes on a confirm card before it's saved.</li>
+                  <li>Each feature has its own chain of fallback models, and prompts can be edited by an admin without a deploy.</li>
+                </ul>
+                <p class="meta">Next.js, Postgres with pgvector, Prisma, Claude, OpenAI embeddings, Cloud Run.</p>
+              </div>
+            </details>
             <p class="meta"><a href="https://trellisiq.online/">trellisiq.online</a>, with a demo you can try without an account. Not under active work since June.</p>
           </div>
         </li>
@@ -121,11 +292,6 @@
         </li>
 
       </ol>
-
-      <div class="aside">
-        <h3>Also tinkering with: enCodr</h3>
-        <p>Keep a presentation's argument (the claims, the evidence, the ask) as structured source, and generate the slides for each audience from it, instead of rebuilding a deck by hand every time. Agents write the code; I review each step. Private prototype.</p>
-      </div>
     </div>
   </section>
 
